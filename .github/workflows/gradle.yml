@@ -26,11 +26,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+
       - name: Build with Gradle
         run: gradle build
 
       - name: Heroku Action
-      - uses: CDNievas/heroku-action@v1.0 # This is the action
+        uses: CDNievas/heroku-action@v1.0 # This is the action
         with:
           heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
           heroku_app_name: xxx-server-develop #Must be unique in Heroku
