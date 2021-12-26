@@ -38,3 +38,6 @@ out/
 
 ### github action ###
 .github
+
+### heroku ###
+system.properties
