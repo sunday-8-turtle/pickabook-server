@@ -1,4 +1,4 @@
-package beside.xxx.xxxserver;
+package beside.sunday8turtle.pickabookserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
