@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### github action ###
+.github
+
+### heroku ###
+system.properties
