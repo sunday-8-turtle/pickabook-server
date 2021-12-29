@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +71,18 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    // Jwt 토큰 만료일자 반환
+    public String getExpireDate(String jwtToken) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            Date expireDate = claims.getBody().getExpiration();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            return dateFormat.format(expireDate);
+        } catch (Exception e) {
+            return null;
         }
     }
 }
