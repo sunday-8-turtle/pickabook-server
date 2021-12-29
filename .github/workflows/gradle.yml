@@ -10,27 +10,29 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - develop
+    - develop
   pull_request:
     branches:
-      - develop
+    - develop
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Build with Gradle
-        run: gradle build
-
-      - name: Heroku Deploy
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
-          heroku_app_name: pickabook-server-develop #Must be unique in Heroku
-          heroku_email: sm9171@nate.com
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
+      with:
+        arguments: build
+        
+    - uses: akhileshns/heroku-deploy@v3.1.6 # This is the action
+      with:
+        heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
+        heroku_app_name: xxx-server-develop #Must be unique in Heroku
+        heroku_email: sm9171@nate.com
