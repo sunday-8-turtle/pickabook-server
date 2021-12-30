@@ -32,3 +32,9 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'beside.sunday8turtle.pickabookserver'
+	}
+}
