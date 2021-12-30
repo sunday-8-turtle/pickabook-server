@@ -32,9 +32,3 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-
-bootJar {
-	destinationDirectory = file("./target")
-	archiveBaseName = "picabook"
-	archiveVersion = "0.0.1"
-}
