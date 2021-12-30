@@ -33,6 +33,8 @@ test {
 	useJUnitPlatform()
 }
 
-manifest {
-	attributes 'Main-Class': 'beside.sunday8turtle.pickabookserver.PickabookServerApplication'
+jar {
+	manifest {
+		attributes 'Main-Class': 'beside.sunday8turtle.pickabookserver.PickabookServerApplication.class'
+	}
 }
