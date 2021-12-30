@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'beside.xxx'
+group = 'beside.sunday-8-turtle'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -31,4 +31,10 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+bootJar {
+	destinationDirectory = file("./target")
+	archiveBaseName = "picabook"
+	archiveVersion = "0.0.1"
 }
