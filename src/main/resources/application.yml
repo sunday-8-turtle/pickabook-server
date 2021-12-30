@@ -9,3 +9,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+  jwt:
+    secret: govlepel@$&
