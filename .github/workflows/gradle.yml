@@ -34,5 +34,5 @@ jobs:
     - uses: akhileshns/heroku-deploy@v3.1.6 # This is the action
       with:
         heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
-        heroku_app_name: xxx-server-develop #Must be unique in Heroku
+        heroku_app_name: pickabook-server-develop #Must be unique in Heroku
         heroku_email: sm9171@nate.com
