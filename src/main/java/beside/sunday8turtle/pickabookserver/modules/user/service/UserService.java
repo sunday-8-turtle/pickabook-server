@@ -2,6 +2,7 @@ package beside.sunday8turtle.pickabookserver.modules.user.service;
 
 import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
+import beside.sunday8turtle.pickabookserver.modules.user.dto.UserSignUpRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +21,8 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void registerUser(User user) {
-        user.setPassword(getEncodePassword(user.getPassword()));
-        user.setRoles("USER");
-        userRepository.save(user);
+    public User registerUser(UserSignUpRequestDTO request) {
+        return userRepository.save(User.of(request.getEmail(), getEncodePassword(request.getPassword()), request.getNickname(), "USER"));
     }
 
     public User getUserByEmail(String email) {
