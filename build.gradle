@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.1'
+	id 'org.springframework.boot' version '2.5.8'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
@@ -24,6 +24,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-maven-plugin', version: '2.6.1'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	// Swagger 2
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
