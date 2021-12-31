@@ -9,13 +9,13 @@ import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,34 +23,23 @@ import java.util.Arrays;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody UserSignUpRequestDTO dto) {
+        userService.getUserByEmail(dto.getEmail()).ifPresent(m -> {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        });
         userService.registerUser(dto);
         return new ResponseEntity(HttpStatus.OK);
+
     }
 
     @PostMapping("")
-    public ResponseEntity login(@RequestBody UserPostRequestDTO dto) {
-        User beforeUser = userService.getUserByEmail(dto.getEmail());
-        String accessToken = "";
-
-        if (beforeUser == null) return null; // TODO: getUserByEmail 내 익셉션 처리
-
-        if (!passwordEncoder.matches(dto.getPassword(), beforeUser.getPassword()))
-            return null; // TODO: 익셉션 처리
-        accessToken = jwtTokenProvider.createToken(String.valueOf(beforeUser.getEmail()), Arrays.asList("ROLE_USER"));
-
-        UserPostResponseDTO userSignUpResponse = new UserPostResponseDTO();
-        userSignUpResponse.setToken(accessToken);
-        userSignUpResponse.setExpireTime(jwtTokenProvider.getExpireDate(accessToken));
-
-        if (accessToken.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity(userSignUpResponse, HttpStatus.OK);
+    public UserPostResponseDTO login(@RequestBody UserPostRequestDTO dto) {
+        Optional<User> userByEmailAndPassword = userService.getUserByEmailAndPassword(dto.getEmail(), dto.getPassword());
+        String accessToken = jwtTokenProvider.createToken(String.valueOf(userByEmailAndPassword.get().getEmail()), Arrays.asList("ROLE_USER"));
+        return new UserPostResponseDTO(accessToken, jwtTokenProvider.getExpireDate(accessToken));
     }
 
 }

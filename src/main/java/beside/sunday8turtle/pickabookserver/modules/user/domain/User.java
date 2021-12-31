@@ -2,6 +2,7 @@ package beside.sunday8turtle.pickabookserver.modules.user.domain;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,13 +23,6 @@ public class User {
     private String nickname;
     private String roles; // USER, ADMIN
 
-    public List<String> getRoleList() {
-        if (this.roles.length() > 0) {
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
-    }
-
     private User(String email, String password, String nickname, String roles) {
         this.email = email;
         this.password = password;
@@ -41,5 +35,16 @@ public class User {
 
     public static User of(String email, String password, String nickname, String roles) {
         return new User(email, password, nickname, roles);
+    }
+
+    public List<String> getRoleList() {
+        if (this.roles.length() > 0) {
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public boolean matchesPassword(String rawPassword, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(rawPassword, password);
     }
 }

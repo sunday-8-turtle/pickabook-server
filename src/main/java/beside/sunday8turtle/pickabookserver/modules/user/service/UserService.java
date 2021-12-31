@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -25,12 +27,16 @@ public class UserService implements UserDetailsService {
         return userRepository.save(User.of(request.getEmail(), getEncodePassword(request.getPassword()), request.getNickname(), "USER"));
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     private String getEncodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public Optional<User> getUserByEmailAndPassword(String email, String rawPassword) {
+        return userRepository.findByEmail(email).filter(user -> user.matchesPassword(rawPassword, passwordEncoder));
     }
 
     @Override
