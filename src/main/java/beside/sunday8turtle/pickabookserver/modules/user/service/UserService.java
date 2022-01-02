@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     public User registerUser(UserSignUpRequestDTO request) {
-        return userRepository.save(User.of(request.getEmail(), getEncodePassword(request.getPassword()), request.getNickname(), "USER"));
+        return userRepository.save(User.of(request.getEmail(), getEncodePassword(request.getPassword()), request.getNickname(), "ROLE_USER"));
     }
 
     public Optional<User> getUserByEmail(String email) {

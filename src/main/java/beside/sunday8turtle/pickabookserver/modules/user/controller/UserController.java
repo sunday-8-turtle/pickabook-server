@@ -37,7 +37,7 @@ public class UserController {
     public UserPostResponseDTO login(@RequestBody UserPostRequestDTO dto) {
         Optional<User> userByEmailAndPassword = userService.getUserByEmailAndPassword(dto.getEmail(), dto.getPassword());
         userByEmailAndPassword.orElseThrow(() -> new IllegalStateException("아이디 혹은 비밀번호가 유효하지 않습니다."));
-        String accessToken = jwtTokenProvider.createToken(String.valueOf(userByEmailAndPassword.get().getEmail()), Arrays.asList("ROLE_USER"));
+        String accessToken = jwtTokenProvider.createToken(String.valueOf(userByEmailAndPassword.get().getEmail()), userByEmailAndPassword.get().getRoleList());
         return new UserPostResponseDTO(accessToken, jwtTokenProvider.getExpireDate(accessToken));
     }
 
