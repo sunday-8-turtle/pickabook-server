@@ -31,6 +31,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
     private String getEncodePassword(String password) {
         return passwordEncoder.encode(password);
     }
