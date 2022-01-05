@@ -10,4 +10,5 @@ import lombok.*;
 public class UserPostResponseDTO {
     private String token;
     private String expireTime;
+    private String refreshToken;
 }
