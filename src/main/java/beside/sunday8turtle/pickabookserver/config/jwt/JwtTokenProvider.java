@@ -26,7 +26,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     @Value("spring.jwt.secret")
     private String secretKey;
 
-    private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
+    public final static long tokenValidSecond = 1000L * 60 * 60; // 1시간만 토큰 유효
+    public final static long refreshTokenValidSecond = 1000L * 60 * 60 * 24; // 1일만 토큰 유효
 
     private final UserDetailsService userDetailsService;
 
@@ -36,14 +37,22 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     }
 
     // Jwt 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
+    public String generateToken(String userPk, List<String> roles) {
+        return doGenerateToken(userPk, roles, tokenValidSecond);
+    }
+
+    public String generateRefreshToken(String userPk, List<String> roles) {
+        return doGenerateToken(userPk, roles, refreshTokenValidSecond);
+    }
+
+    public String doGenerateToken(String userPk, List<String> roles, long expireTime) {
         Claims claims = Jwts.claims().setSubject(userPk);
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 데이터
                 .setIssuedAt(now) // 토큰 발행일자
-                .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
+                .setExpiration(new Date(now.getTime() + expireTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘, secret값 세팅
                 .compact();
     }
