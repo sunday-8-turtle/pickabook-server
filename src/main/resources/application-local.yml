@@ -1,0 +1,16 @@
+spring.h2.console.enabled: true
+
+spring:
+  datasource:
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  jwt:
+    secret: govlepel@$&
+  redis:
+    host: localhost
+    port: 6379
