@@ -27,11 +27,10 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
-      with:
-        arguments: build
-        
-    - uses: akhileshns/heroku-deploy@v3.1.6 # This is the action
+      run: gradle build
+
+    - name: Heroku Deploy
+      uses: AkhileshNS/heroku-deploy@v3.12.12on
       with:
         heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
         heroku_app_name: pickabook-server-production #Must be unique in Heroku
