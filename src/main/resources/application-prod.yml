@@ -1,6 +1,8 @@
 spring.h2.console.enabled: true
 
 spring:
+  profiles:
+    location: prod
   datasource:
     username: wrlcjkkjkofftn
     password: 8c933a02bbb173988e7487b7af2b5602cfdb1ad2a55c1d9b33eab31bb88c5553

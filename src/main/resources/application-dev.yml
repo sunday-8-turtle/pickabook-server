@@ -1,6 +1,8 @@
 spring.h2.console.enabled: true
 
 spring:
+  profiles:
+    location: dev
   datasource:
     username: pkqrvmklmegoet
     password: fed34d67388415cb9b23f0a6ea559a44ab07f473d57ce4f9e9460dcf494923bc
