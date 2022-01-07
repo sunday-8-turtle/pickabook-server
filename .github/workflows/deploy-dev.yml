@@ -25,8 +25,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       - name: Heroku Deploy
         uses: AkhileshNS/heroku-deploy@v3.12.12
@@ -34,3 +36,4 @@ jobs:
           heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
           heroku_app_name: pickabook-server-develop #Must be unique in Heroku
           heroku_email: sm9171@nate.com
+          profiles: active=dev
