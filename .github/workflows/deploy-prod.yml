@@ -30,7 +30,7 @@ jobs:
       run: gradle build
 
     - name: Heroku Deploy
-      uses: AkhileshNS/heroku-deploy@v3.12.12on
+      uses: AkhileshNS/heroku-deploy@v3.12.12
       with:
         heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
         heroku_app_name: pickabook-server-production #Must be unique in Heroku
