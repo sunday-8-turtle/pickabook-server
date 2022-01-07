@@ -1,6 +1,8 @@
 spring.h2.console.enabled: true
 
 spring:
+  profiles:
+    location: local
   datasource:
     username: postgres
     password: 1234
