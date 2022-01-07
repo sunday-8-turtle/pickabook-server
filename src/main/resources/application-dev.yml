@@ -1,0 +1,18 @@
+spring.h2.console.enabled: true
+
+spring:
+  datasource:
+    username: pkqrvmklmegoet
+    password: fed34d67388415cb9b23f0a6ea559a44ab07f473d57ce4f9e9460dcf494923bc
+    url: jdbc:postgresql://ec2-34-200-119-220.compute-1.amazonaws.com:5432/d93bgiug8lictj
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  jwt:
+    secret: govlepel@$&
+  redis:
+    host: ec2-44-193-172-66.compute-1.amazonaws.com
+    password: p280989ddc9a731240f057d641a3cb0f51f65e0f9f05fc42bd2d33aac973f0f74
+    uri: redis://:p280989ddc9a731240f057d641a3cb0f51f65e0f9f05fc42bd2d33aac973f0f74@ec2-44-193-172-66.compute-1.amazonaws.com:11670
+    port: 11670
