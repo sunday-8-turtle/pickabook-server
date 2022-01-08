@@ -5,35 +5,31 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Build and Deploy to Development
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
+    types: [closed]
     branches:
-      - develop
+    - develop
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Heroku Deploy
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
-          heroku_app_name: pickabook-server-develop #Must be unique in Heroku
-          heroku_email: sm9171@nate.com
-          profiles: active=dev
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: gradle build
+        
+    - name: Heroku Deploy
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: 5a469ace-035b-4aca-a24c-ce958f8eb1bd
+        heroku_app_name: pickabook-server-develop #Must be unique in Heroku
+        heroku_email: sm9171@nate.com
