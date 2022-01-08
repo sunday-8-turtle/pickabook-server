@@ -8,8 +8,8 @@
 name: Build and Deploy to Development
 
 on:
-  types: [closed]
   pull_request:
+    types: [closed]
     branches:
     - develop
 jobs:
