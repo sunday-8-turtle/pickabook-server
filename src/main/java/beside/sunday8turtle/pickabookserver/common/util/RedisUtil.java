@@ -29,4 +29,9 @@ public class RedisUtil {
     public void delValues(String token) {
         redisTemplate.delete(token.substring(7));
     }
+
+    // 키값 존재 유무 확인
+    public boolean hasValues(String token) {
+        return redisTemplate.hasKey(token);
+    }
 }

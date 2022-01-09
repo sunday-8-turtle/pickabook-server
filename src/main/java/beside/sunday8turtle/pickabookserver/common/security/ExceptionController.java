@@ -14,12 +14,12 @@ public class ExceptionController {
 
     @GetMapping("/entrypoint")
     public void entrypointException() {
-        throw new BaseException(ErrorCode.AUTH_EXPIRED_TOKEN);
+        throw new CustomSecurityException(ErrorCode.AUTH_INVALID_TOKEN);
     }
 
     @GetMapping("/accessdenied")
     public void accessDeniedException() {
-        throw new BaseException(ErrorCode.AUTH_FORBIDDEN);
+        throw new CustomSecurityException(ErrorCode.AUTH_FORBIDDEN);
     }
 
 }

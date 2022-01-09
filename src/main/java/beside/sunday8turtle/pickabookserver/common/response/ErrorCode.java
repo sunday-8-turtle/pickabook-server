@@ -13,7 +13,9 @@ public enum ErrorCode {
     COMMON_ILLEGAL_STATUS("잘못된 상태값입니다."),
 
     // 인증, 권한
-    AUTH_EXPIRED_TOKEN("접근 토큰이 만료되었거나 존재하지 않습니다."),
+    AUTH_INVALID("권한이 유효하지 않습니다."),
+    AUTH_INVALID_TOKEN("토큰이 유효하지 않거나 존재하지 않습니다."),
+    AUTH_INVALID_REFRESH_TOKEN("리프레시 토큰이 유효하지 않습니다."),
     AUTH_FORBIDDEN("접근할 수 없는 리소스입니다.");
 
     private final String errorMsg;
