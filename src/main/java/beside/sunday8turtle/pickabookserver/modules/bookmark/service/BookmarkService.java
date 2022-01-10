@@ -28,10 +28,15 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Bookmark> getBookmarkByUserId(long userId, Pageable pageable) {
+    public Page<Bookmark> getBookmarksByUserId(long userId, Pageable pageable) {
         return userService.getUserById(userId)
                 .map(user -> bookmarkRepository.findAllByUserId(user.getId(), pageable))
                 .orElseThrow(NoSuchElementException::new);
     }
-    
+
+    @Transactional(readOnly = true)
+    public Bookmark getBookmarkByBookmarkId(long bookmarkId) {
+        return bookmarkRepository.findById(bookmarkId)
+                .orElseThrow(NoSuchElementException::new);
+    }
 }
