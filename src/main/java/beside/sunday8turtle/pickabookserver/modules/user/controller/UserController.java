@@ -15,10 +15,7 @@ import beside.sunday8turtle.pickabookserver.modules.user.dto.UserPostResponseDTO
 import beside.sunday8turtle.pickabookserver.modules.user.dto.UserSignUpRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -61,6 +58,16 @@ public class UserController {
                         reissueToken,
                         jwtTokenProvider.getExpireDate(reissueToken),
                         dto.getRefreshToken()));
+    }
+
+    @DeleteMapping("/logout")
+    public CommonResponse logout(@RequestBody TokenRequestDTO dto) {
+
+        if(redisUtil.hasValues(dto.getRefreshToken())) {
+            redisUtil.delValues(dto.getRefreshToken());
+        }
+
+        return CommonResponse.success();
     }
 
 }
