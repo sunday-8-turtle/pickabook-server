@@ -39,4 +39,9 @@ public class BookmarkService {
         return bookmarkRepository.findById(bookmarkId)
                 .orElseThrow(NoSuchElementException::new);
     }
+
+    @Transactional
+    public void deleteBookmarkByBookmarkId(long bookmarkId) {
+        bookmarkRepository.deleteById(bookmarkId);
+    }
 }

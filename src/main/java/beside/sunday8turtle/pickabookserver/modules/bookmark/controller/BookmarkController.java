@@ -39,5 +39,11 @@ public class BookmarkController {
         return CommonResponse.success(BookmarkGetResponseDTO.fromBookmark(bookmarkService.getBookmarkByBookmarkId(bookmarkId)));
     }
 
+    @DeleteMapping("/detail/{bookmarkId}")
+    public CommonResponse deleteBookmark(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long bookmarkId) {
+        //TODO: 본인인증 메소드 구현 필요
+        bookmarkService.deleteBookmarkByBookmarkId(bookmarkId);
+        return CommonResponse.success();
+    }
 
 }
