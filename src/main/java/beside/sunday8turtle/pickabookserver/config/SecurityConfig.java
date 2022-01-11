@@ -1,5 +1,8 @@
 package beside.sunday8turtle.pickabookserver.config;
 
+import beside.sunday8turtle.pickabookserver.common.security.CustomAccessDeniedHandler;
+import beside.sunday8turtle.pickabookserver.common.security.CustomAuthenticationEntryPoint;
+import beside.sunday8turtle.pickabookserver.common.util.RedisUtil;
 import beside.sunday8turtle.pickabookserver.config.jwt.JwtAuthenticationFilter;
 import beside.sunday8turtle.pickabookserver.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisUtil redisUtil;
 
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -32,11 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-                        //.antMatchers("/user/**")
-                        //.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//                        .antMatchers("/test", "/test2").hasRole("USER")
+//                        .antMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 .and()
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                    .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
+                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .and()
+                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider,redisUtil), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
