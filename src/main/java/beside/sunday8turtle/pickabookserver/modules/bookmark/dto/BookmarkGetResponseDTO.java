@@ -18,6 +18,7 @@ public class BookmarkGetResponseDTO {
     private String title;
     private String url;
     private String description;
+    private String tag;
     private Date notidate;
 
     public static BookmarkGetResponseDTO fromBookmark(Bookmark bookmark) {
@@ -25,6 +26,7 @@ public class BookmarkGetResponseDTO {
                 bookmark.getTitle(),
                 bookmark.getUrl(),
                 bookmark.getDescription(),
+                bookmark.getTag(),
                 bookmark.getNotidate()
         );
     }
