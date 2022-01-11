@@ -27,6 +27,11 @@ public class RedisUtil {
 
     // 키-벨류 삭제
     public void delValues(String token) {
-        redisTemplate.delete(token.substring(7));
+        redisTemplate.delete(token);
+    }
+
+    // 키값 존재 유무 확인
+    public boolean hasValues(String token) {
+        return redisTemplate.hasKey(token);
     }
 }
