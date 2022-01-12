@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.Getter;
 import lombok.ToString;
@@ -39,5 +40,14 @@ public class Bookmark {
 
     public static Bookmark of(String title, String url, String description, String tag, Date notidate, User user) {
         return new Bookmark(title, url, description, tag, notidate, user);
+    }
+    
+
+    public void updateBookmark(BookmarkUpdateRequest updateRequest) {
+        updateRequest.getTitleToUpdate().ifPresent(titleToUpdate -> title = titleToUpdate);
+        updateRequest.getUrlToUpdate().ifPresent(urlToUpdate -> url = urlToUpdate);
+        updateRequest.getDescriptionToUpdate().ifPresent(descriptionToUpdate -> description = descriptionToUpdate);
+        updateRequest.getTagToUpdate().ifPresent(tagToUpdate -> tag = tagToUpdate);
+        updateRequest.getNotidateToUpdate().ifPresent(notidateToUpdate -> notidate = notidateToUpdate);
     }
 }

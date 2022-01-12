@@ -1,6 +1,7 @@
 package beside.sunday8turtle.pickabookserver.modules.user.domain;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,6 +53,11 @@ public class User {
 
     public Bookmark addBookmark(String title, String url, String description, String tag, Date notidate, User user) {
         return Bookmark.of(title, url, description, tag, notidate, user);
+    }
+
+    public Bookmark updateBookmark(Bookmark bookmark, BookmarkUpdateRequest request) {
+        bookmark.updateBookmark(request);
+        return bookmark;
     }
 
 }

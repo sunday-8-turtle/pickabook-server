@@ -1,13 +1,16 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.service;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPostRequestDTO;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.repository.BookmarkRepository;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,11 +21,36 @@ public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
 
     @Transactional
-    public Bookmark createNewBookmark(long id, String title, String url, String description, String tag, Date notidate) {
-        return userService.getUserById(id)
-                .map(user -> user.addBookmark(title, url, description, tag, notidate, user))
+    public Bookmark createNewBookmark(long userId, BookmarkPostRequestDTO request) {
+        return userService.getUserById(userId)
+                .map(user -> user.addBookmark(request.getTitle(), request.getUrl(), request.getDescription(), request.getTag(), request.getNotidate(), user))
                 .map(bookmarkRepository::save)
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    @Transactional(readOnly = true)
+    public Page<Bookmark> getBookmarksByUserId(long userId, Pageable pageable) {
+        return userService.getUserById(userId)
+                .map(user -> bookmarkRepository.findAllByUserId(user.getId(), pageable))
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public Bookmark getBookmarkByBookmarkId(long bookmarkId) {
+        return bookmarkRepository.findById(bookmarkId)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Transactional
+    public void deleteBookmarkByBookmarkId(long bookmarkId) {
+        bookmarkRepository.deleteById(bookmarkId);
+    }
+
+    @Transactional
+    public Bookmark updateBookmark(long bookmarkId, BookmarkUpdateRequest request) {
+        Bookmark bookmark = bookmarkRepository.findById(bookmarkId).orElseThrow(NoSuchElementException::new);
+        //TODO: bookmark도메인에 수정 메소드 작성
+        userService.getUserById(bookmark.getId()).ifPresent(user -> user.updateBookmark(bookmark, request));
+        return bookmark;
+    }
 }
