@@ -4,9 +4,9 @@ spring:
   profiles:
     location: dev
   datasource:
-    username: pkqrvmklmegoet
-    password: fed34d67388415cb9b23f0a6ea559a44ab07f473d57ce4f9e9460dcf494923bc
-    url: jdbc:postgresql://ec2-34-200-119-220.compute-1.amazonaws.com:5432/d93bgiug8lictj
+    username: mcyhfhugcuzbdw
+    password: 7eb2f7725c501ec3bb9f853df38c0882aca6f5a9062387f6dc2f7c80fa607400
+    url: jdbc:postgresql://ec2-18-209-169-66.compute-1.amazonaws.com:5432/d1ngm032j3spr8
   jpa:
     show-sql: true
     hibernate:
@@ -14,7 +14,7 @@ spring:
   jwt:
     secret: govlepel@$&
   redis:
-    host: ec2-44-193-172-66.compute-1.amazonaws.com
-    password: p280989ddc9a731240f057d641a3cb0f51f65e0f9f05fc42bd2d33aac973f0f74
-    uri: redis://:p280989ddc9a731240f057d641a3cb0f51f65e0f9f05fc42bd2d33aac973f0f74@ec2-44-193-172-66.compute-1.amazonaws.com:11670
-    port: 11670
+    host: ec2-54-147-184-118.compute-1.amazonaws.com
+    password: p47469da5fc8f0b168f28cce08ff36f9943090c7be3d78223c546c75a1cc6b8ff
+    uri: redis://:p47469da5fc8f0b168f28cce08ff36f9943090c7be3d78223c546c75a1cc6b8ff@ec2-54-147-184-118.compute-1.amazonaws.com:8810
+    port: 8810
