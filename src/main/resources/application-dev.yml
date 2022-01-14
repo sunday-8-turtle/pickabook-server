@@ -14,7 +14,6 @@ spring:
   jwt:
     secret: govlepel@$&
   redis:
-    host: ec2-54-147-184-118.compute-1.amazonaws.com
-    password: p47469da5fc8f0b168f28cce08ff36f9943090c7be3d78223c546c75a1cc6b8ff
-    uri: redis://:p47469da5fc8f0b168f28cce08ff36f9943090c7be3d78223c546c75a1cc6b8ff@ec2-54-147-184-118.compute-1.amazonaws.com:8810
-    port: 8810
+    host: spinyfin.redistogo.com
+    password: 6dfca28fd1ec503d1030116c2693e696
+    port: 10783

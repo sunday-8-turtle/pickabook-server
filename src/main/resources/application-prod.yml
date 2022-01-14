@@ -14,7 +14,6 @@ spring:
   jwt:
     secret: govlepel@$&
   redis:
-    host: ec2-34-232-107-96.compute-1.amazonaws.com
-    password: p5904306f0f89bfe1baf72e8c96f9ddbe08415a56e6c1734f1dc02e06d65aa6f8
-    uri: redis://:p5904306f0f89bfe1baf72e8c96f9ddbe08415a56e6c1734f1dc02e06d65aa6f8@ec2-34-232-107-96.compute-1.amazonaws.com:19470
-    port: 19470
+    host: scat.redistogo.com
+    password: 18362c5ab9e68483264bc223abc8bb7c
+    port: 10273
