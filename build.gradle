@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-maven-plugin', version: '2.6.1'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	// Swagger 2
