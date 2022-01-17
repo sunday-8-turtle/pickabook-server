@@ -2,7 +2,7 @@ package beside.sunday8turtle.pickabookserver.modules.bookmark.dto;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ public class BookmarkPostRequestDTO {
         private String url;
         private String description;
         private String tag;
-        private Date notidate;
+        private LocalDate notidate;
 }

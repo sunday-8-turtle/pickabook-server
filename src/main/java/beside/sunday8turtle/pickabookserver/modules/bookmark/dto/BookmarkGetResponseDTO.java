@@ -4,7 +4,7 @@ import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import lombok.*;
 import org.springframework.data.domain.Page;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -19,7 +19,7 @@ public class BookmarkGetResponseDTO {
     private String url;
     private String description;
     private String tag;
-    private Date notidate;
+    private LocalDate notidate;
 
     public static BookmarkGetResponseDTO fromBookmark(Bookmark bookmark) {
         return new BookmarkGetResponseDTO(

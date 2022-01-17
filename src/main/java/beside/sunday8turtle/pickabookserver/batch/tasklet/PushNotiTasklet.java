@@ -36,10 +36,6 @@ public class PushNotiTasklet implements Tasklet, StepExecutionListener {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         log.debug("contribution : {}, chunkContext : {}", stepContribution, chunkContext);
         System.out.println("Message: " + message); // 메세지 출력
-        //비즈니스 로직
-        for (int idx = 0; idx < 10; idx++) {
-            log.info("[idx] = " + idx);
-        }
 
         return RepeatStatus.FINISHED;
     }

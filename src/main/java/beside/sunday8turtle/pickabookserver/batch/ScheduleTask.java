@@ -26,18 +26,15 @@ public class ScheduleTask {
     @Autowired
     private Job notiJob;
 
-    //5초에 한 번씩 스케줄
-    @Scheduled(cron = "0/5 * * * * *")
+    // 오전 9시마다 실행
+    @Scheduled(cron = "0 0 9 * * *")
     public void jobScheduled() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         Map<String, JobParameter> jobParametersMap = new HashMap<>();
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
         Date time = new Date();
         String time1 = format1.format(time);
-
-        jobParametersMap.put("date",new JobParameter(time1));
-
+        jobParametersMap.put("date", new JobParameter(time1));
         JobParameters parameters = new JobParameters(jobParametersMap);
-
         jobLauncher.run(notiJob, parameters);
     }
 }

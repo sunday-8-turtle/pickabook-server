@@ -1,11 +1,14 @@
 package beside.sunday8turtle.pickabookserver.modules.mail.service;
 
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import beside.sunday8turtle.pickabookserver.modules.user.dto.UserCertificationRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.user.dto.UserSignUpRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +31,13 @@ public class MailService {
         mailSender.send(message);
     }
 
+    public void bookmarkNoticeMailSend(List<Bookmark> bookmarks) {
+        for (Bookmark bookmark : bookmarks) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(bookmark.getUser().getEmail());
+            message.setSubject(bookmark.getUser().getNickname() + "님 북마크 알림입니다.");
+            message.setText(bookmark.getTitle() + " 알림 요청에 따른 메일 발송입니다.");
+            mailSender.send(message);
+        }
+    }
 }

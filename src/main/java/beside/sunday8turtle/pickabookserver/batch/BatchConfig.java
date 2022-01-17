@@ -2,6 +2,8 @@ package beside.sunday8turtle.pickabookserver.batch;
 
 import beside.sunday8turtle.pickabookserver.batch.tasklet.PushEmailTasklet;
 import beside.sunday8turtle.pickabookserver.batch.tasklet.PushNotiTasklet;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
+import beside.sunday8turtle.pickabookserver.modules.mail.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -9,8 +11,11 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.LocalDate;
 
 // 배치 구성 클래스
 @Slf4j
@@ -21,22 +26,25 @@ public class BatchConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    private final MailService mailService;
+    @Autowired
+    private final BookmarkService bookmarkService;
 
     @Bean
     public Job notiJob() {
-        System.out.println("notiJob 메서드 실행");
         return jobBuilderFactory.get("notiJob") // 일억성이 되는 임의 잡 이름을 지정
                 .flow(pushEmailStep()) // 실행하는 Step을 지정
-                .next(pushNotiStep()) // 실행하는 Step을 지정
+//                .next(pushNotiStep()) // 실행하는 Step을 지정
                 .end()
                 .build();
     }
 
     @Bean
     public Step pushEmailStep() {
-        System.out.println("pushEmailStep 메서드 실행");
+        LocalDate currentDate = LocalDate.now();
         return stepBuilderFactory.get("pushEmailStep") // 임의의 스탭 이름을 지정
-                .tasklet(new PushEmailTasklet("Hello!")) // 실행하는 Tasklet을 지정
+                .tasklet(new PushEmailTasklet(currentDate, mailService, bookmarkService)) // 실행하는 Tasklet을 지정
                 .build();
     }
 

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -48,9 +50,14 @@ public class BookmarkService {
 
     @Transactional
     public Bookmark updateBookmark(long bookmarkId, BookmarkUpdateRequest request) {
-        Bookmark bookmark = bookmarkRepository.findById(bookmarkId).orElseThrow(NoSuchElementException::new);
         //TODO: bookmark도메인에 수정 메소드 작성
-        userService.getUserById(bookmark.getId()).ifPresent(user -> user.updateBookmark(bookmark, request));
-        return bookmark;
+        bookmarkRepository.findById(bookmarkId).ifPresent(bookmark -> bookmark.updateBookmark(bookmark, request));
+        return bookmarkRepository.findById(bookmarkId).orElseThrow(NoSuchElementException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Bookmark> getBookmarkByNotidate(LocalDate notidate) {
+        //TODO: bookmark도메인에 수정 메소드 작성
+        return bookmarkRepository.findAllByNotidate(notidate);
     }
 }

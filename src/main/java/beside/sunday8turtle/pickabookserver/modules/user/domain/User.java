@@ -1,15 +1,14 @@
 package beside.sunday8turtle.pickabookserver.modules.user.domain;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -51,13 +50,7 @@ public class User {
         return passwordEncoder.matches(rawPassword, password);
     }
 
-    public Bookmark addBookmark(String title, String url, String description, String tag, Date notidate, User user) {
+    public Bookmark addBookmark(String title, String url, String description, String tag, LocalDate notidate, User user) {
         return Bookmark.of(title, url, description, tag, notidate, user);
     }
-
-    public Bookmark updateBookmark(Bookmark bookmark, BookmarkUpdateRequest request) {
-        bookmark.updateBookmark(request);
-        return bookmark;
-    }
-
 }
