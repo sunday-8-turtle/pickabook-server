@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- message : <input id="input"/> -->
+<button id="send">send</button>
+<pre id="messages"></pre>
+<script>
+    let id = 1;
+    const eventSource = new EventSource(`http://localhost:8080/notification/subscribe/${id}`);
+
+    window.onload = function() {
+        getNotificationPermission();
+    };
+
+    eventSource.onopen = (e) => {
+        console.log("open:");
+        console.log(e);
+    };
+
+    eventSource.onerror = (e) => {
+        console.log("error:" + e);
+    };
+
+    eventSource.onmessage = (e) => {
+        console.log("message:");
+        notify(e.data);
+    };
+
+    document.querySelector("#send").addEventListener("click", () => {
+        console.log("send:");
+        fetch(`http://localhost:8080/notification/publish`);
+    });
+
+    //알림 권한 요청
+    function getNotificationPermission() {
+        // 브라우저 지원 여부 체크
+        if (!("Notification" in window)) {
+            alert("데스크톱 알림을 지원하지 않는 브라우저입니다.");
+        }
+        // 데스크탑 알림 권한 요청
+        Notification.requestPermission(function (result) {
+            // 권한 거절
+            if(result == 'denied') {
+                alert('알림을 차단하셨습니다.\n브라우저의 사이트 설정에서 변경하실 수 있습니다.');
+                return false;
+            }
+        });
+    }
+
+    // 알림 띄우기
+    function notify(msg) {
+        var options = {
+            body: msg
+        }
+
+        // 데스크탑 알림 요청
+        var notification = new Notification("Pick a book 까꿍!", options);
+
+        // 3초뒤 알람 닫기
+        setTimeout(function(){
+            notification.close();
+        }, 4000);
+    }
+</script>
+</body>
+</html>
