@@ -4,6 +4,7 @@ import beside.sunday8turtle.pickabookserver.batch.tasklet.PushEmailTasklet;
 import beside.sunday8turtle.pickabookserver.batch.tasklet.PushNotiTasklet;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
 import beside.sunday8turtle.pickabookserver.modules.mail.service.MailService;
+import beside.sunday8turtle.pickabookserver.modules.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -30,12 +31,14 @@ public class BatchConfig {
     private final MailService mailService;
     @Autowired
     private final BookmarkService bookmarkService;
+    @Autowired
+    private final NotificationService notificationService;
 
     @Bean
     public Job notiJob() {
         return jobBuilderFactory.get("notiJob") // 일억성이 되는 임의 잡 이름을 지정
                 .flow(pushEmailStep()) // 실행하는 Step을 지정
-//                .next(pushNotiStep()) // 실행하는 Step을 지정
+                .next(pushNotiStep()) // 실행하는 Step을 지정
                 .end()
                 .build();
     }
@@ -50,9 +53,9 @@ public class BatchConfig {
 
     @Bean
     public Step pushNotiStep() {
-        System.out.println("pushNotiStep 메서드를 실행");
+        LocalDate currentDate = LocalDate.now();
         return stepBuilderFactory.get("pushNotiStep") // 임의의 스탭 이름을 지정
-                .tasklet(new PushNotiTasklet("World!")) // 실행하는 Tasklet을 지정
+                .tasklet(new PushNotiTasklet(currentDate, notificationService, bookmarkService)) // 실행하는 Tasklet을 지정
                 .build();
     }
 }
