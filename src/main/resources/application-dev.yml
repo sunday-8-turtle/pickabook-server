@@ -5,7 +5,7 @@ spring:
     location: dev
   datasource:
     username: mcyhfhugcuzbdw
-    password: 7eb2f7725c501ec3bb9f853df38c0882aca6f5a9062387f6dc2f7c80fa607400
+    password: ENC(8vEUlgFRXFUri1GZaVKURieTjBzSLjLmvr3AUn8uklAKUmdckazCLO5snqboh9hagOdcXHdcfp7nRQG9XVY793mp5EZFUUh+aY3XvSFVw/8=)
     url: jdbc:postgresql://ec2-18-209-169-66.compute-1.amazonaws.com:5432/d1ngm032j3spr8
   jpa:
     show-sql: true
@@ -15,7 +15,7 @@ spring:
     secret: govlepel@$&
   redis:
     host: spinyfin.redistogo.com
-    password: 6dfca28fd1ec503d1030116c2693e696
+    password: ENC(LXDVS0RrD84UudCzVW+OyPQXDq+HtnsGvBA+qGlYpmvTjOt5Ev71Ote4te7EBpbx)
     port: 10783
   mail:
     host: smtp.gmail.com

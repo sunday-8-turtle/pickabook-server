@@ -30,6 +30,7 @@ dependencies {
 	// Swagger 2
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -38,6 +39,7 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	systemProperty 'jasypt.encryptor.password', findProperty("jasypt.encryptor.password")
 }
 
 jar {
