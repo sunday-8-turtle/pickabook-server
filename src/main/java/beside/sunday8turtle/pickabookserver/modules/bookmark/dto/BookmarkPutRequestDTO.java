@@ -2,7 +2,7 @@ package beside.sunday8turtle.pickabookserver.modules.bookmark.dto;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import static beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest.builder;
 
@@ -12,11 +12,11 @@ import static beside.sunday8turtle.pickabookserver.modules.bookmark.dto.Bookmark
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookmarkPutRequestDTO {
-        private  String title;
-        private  String url;
-        private  String description;
-        private  String tag;
-        private  Date notidate;
+        private String title;
+        private String url;
+        private String description;
+        private String tag;
+        private LocalDate notidate;
 
         public BookmarkUpdateRequest toUpdateRequest() {
                 return builder().titleToUpdate(title)

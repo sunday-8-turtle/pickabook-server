@@ -16,7 +16,8 @@ public enum ErrorCode {
     AUTH_INVALID("권한이 유효하지 않습니다."),
     AUTH_INVALID_TOKEN("토큰이 유효하지 않거나 존재하지 않습니다."),
     AUTH_INVALID_REFRESH_TOKEN("리프레시 토큰이 유효하지 않습니다."),
-    AUTH_FORBIDDEN("접근할 수 없는 리소스입니다.");
+    AUTH_FORBIDDEN("접근할 수 없는 리소스입니다."),
+    AUTH_INVALID_CODE("인증코드가 유효하지 않습니다.");
 
     private final String errorMsg;
 

@@ -17,3 +17,14 @@ spring:
     host: scat.redistogo.com
     password: 18362c5ab9e68483264bc223abc8bb7c
     port: 10273
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pickaboookk@gmail.com
+    password: vlzkqnr1!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -15,4 +15,19 @@ spring:
     secret: govlepel@$&
   redis:
     host: localhost
+    password: 1234
     port: 6379
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pickaboookk@gmail.com
+    password: vlzkqnr1!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  batch:
+    job:
+      enabled: false

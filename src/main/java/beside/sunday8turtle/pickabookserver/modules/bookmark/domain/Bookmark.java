@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -21,12 +21,13 @@ public class Bookmark {
     private String url;
     private String description;
     private String tag; //TODO: tag 도메인 생성 예정
-    private Date notidate;
+    private LocalDate notidate;
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Bookmark(String title, String url, String description, String tag, Date notidate, User user) {
+    private Bookmark(String title, String url, String description, String tag, LocalDate notidate, User user) {
         this.title = title;
         this.url = url;
         this.description = description;
@@ -38,16 +39,16 @@ public class Bookmark {
     protected Bookmark() {
     }
 
-    public static Bookmark of(String title, String url, String description, String tag, Date notidate, User user) {
+    public static Bookmark of(String title, String url, String description, String tag, LocalDate notidate, User user) {
         return new Bookmark(title, url, description, tag, notidate, user);
     }
-    
 
-    public void updateBookmark(BookmarkUpdateRequest updateRequest) {
+    public Bookmark updateBookmark(Bookmark bookmark, BookmarkUpdateRequest updateRequest) {
         updateRequest.getTitleToUpdate().ifPresent(titleToUpdate -> title = titleToUpdate);
         updateRequest.getUrlToUpdate().ifPresent(urlToUpdate -> url = urlToUpdate);
         updateRequest.getDescriptionToUpdate().ifPresent(descriptionToUpdate -> description = descriptionToUpdate);
         updateRequest.getTagToUpdate().ifPresent(tagToUpdate -> tag = tagToUpdate);
         updateRequest.getNotidateToUpdate().ifPresent(notidateToUpdate -> notidate = notidateToUpdate);
+        return bookmark;
     }
 }

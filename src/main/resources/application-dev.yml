@@ -17,3 +17,14 @@ spring:
     host: spinyfin.redistogo.com
     password: 6dfca28fd1ec503d1030116c2693e696
     port: 10783
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pickaboookk@gmail.com
+    password: vlzkqnr1!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -1,6 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -10,7 +10,7 @@ public class BookmarkUpdateRequest {
     private final String urlToUpdate;
     private final String descriptionToUpdate;
     private final String tagToUpdate;
-    private final Date notidateToUpdate;
+    private final LocalDate notidateToUpdate;
 
     public static BookmarkUpdateRequestBuilder builder() {
         return new BookmarkUpdateRequestBuilder();
@@ -19,16 +19,20 @@ public class BookmarkUpdateRequest {
     public Optional<String> getTitleToUpdate() {
         return ofNullable(titleToUpdate);
     }
+
     public Optional<String> getUrlToUpdate() {
         return ofNullable(urlToUpdate);
     }
+
     public Optional<String> getDescriptionToUpdate() {
         return ofNullable(descriptionToUpdate);
     }
+
     public Optional<String> getTagToUpdate() {
         return ofNullable(tagToUpdate);
     }
-    public Optional<Date> getNotidateToUpdate() {
+
+    public Optional<LocalDate> getNotidateToUpdate() {
         return ofNullable(notidateToUpdate);
     }
 
@@ -45,7 +49,7 @@ public class BookmarkUpdateRequest {
         private String urlToUpdate;
         private String descriptionToUpdate;
         private String tagToUpdate;
-        private Date notidateToUpdate;
+        private LocalDate notidateToUpdate;
 
         public BookmarkUpdateRequestBuilder titleToUpdate(String titleToUpdate) {
             this.titleToUpdate = titleToUpdate;
@@ -67,7 +71,7 @@ public class BookmarkUpdateRequest {
             return this;
         }
 
-        public BookmarkUpdateRequestBuilder notidateToUpdate(Date notidateToUpdate) {
+        public BookmarkUpdateRequestBuilder notidateToUpdate(LocalDate notidateToUpdate) {
             this.notidateToUpdate = notidateToUpdate;
             return this;
         }
