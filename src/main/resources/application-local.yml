@@ -10,12 +10,12 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   jwt:
     secret: govlepel@$&
   redis:
     host: localhost
-    password:
+    password: 1234
     port: 6379
   mail:
     host: smtp.gmail.com
