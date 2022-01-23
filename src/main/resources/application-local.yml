@@ -5,7 +5,7 @@ spring:
     location: local
   datasource:
     username: postgres
-    password: 1234
+    password: ENC(Bm/GUgfTbDQUGBgceLGrqA==)
     url: jdbc:postgresql://localhost:5432/postgres
   jpa:
     show-sql: true
@@ -15,7 +15,7 @@ spring:
     secret: govlepel@$&
   redis:
     host: localhost
-    password: 1234
+    password: ENC(Bm/GUgfTbDQUGBgceLGrqA==)
     port: 6379
   mail:
     host: smtp.gmail.com

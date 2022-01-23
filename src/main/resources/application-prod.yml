@@ -5,7 +5,7 @@ spring:
     location: prod
   datasource:
     username: wrlcjkkjkofftn
-    password: 8c933a02bbb173988e7487b7af2b5602cfdb1ad2a55c1d9b33eab31bb88c5553
+    password: ENC(AUKewXl2THxjTkHsuvs2Ic7bg05FSwOGPfaBWo+VnzrIigi4lmWHl4sBMTdvuHpgzq/HWF+OJxqaPdNpAlfeAbWHNOggCCTqD1Zh2jMmu+s=)
     url: jdbc:postgresql://ec2-54-224-120-186.compute-1.amazonaws.com:5432/d14uvkjkdvu607
   jpa:
     show-sql: true
@@ -15,7 +15,7 @@ spring:
     secret: govlepel@$&
   redis:
     host: scat.redistogo.com
-    password: 18362c5ab9e68483264bc223abc8bb7c
+    password: ENC(FnuS29hOJ28uE/g2URiaWmBXZeLdZ1lHBHVDyWE3lrb5JJi2+Xt2fePGa1dYuo6B)
     port: 10273
   mail:
     host: smtp.gmail.com
