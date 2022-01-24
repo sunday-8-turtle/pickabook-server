@@ -3,6 +3,7 @@ package beside.sunday8turtle.pickabookserver.modules.user.domain;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -24,6 +25,10 @@ public class User {
     private String password;
     private String nickname;
     private String roles; // USER, ADMIN
+
+    // noti setting
+    private boolean isBrowserNoti;
+    private boolean isEmailNoti;
 
     private User(String email, String password, String nickname, String roles) {
         this.email = email;
@@ -53,4 +58,22 @@ public class User {
     public Bookmark addBookmark(String title, String url, String description, String tag, LocalDate notidate, User user) {
         return Bookmark.of(title, url, description, tag, notidate, user);
     }
+
+    public void enableBrowserNoti() {
+        this.isBrowserNoti = true;
+    }
+
+    public void disableBrowserNoti() {
+        this.isBrowserNoti = false;
+    }
+
+    public void enableEmailNoti() {
+        this.isEmailNoti = true;
+    }
+
+    public void disableEmailNoti() {
+        this.isEmailNoti = false;
+    }
+
+
 }
