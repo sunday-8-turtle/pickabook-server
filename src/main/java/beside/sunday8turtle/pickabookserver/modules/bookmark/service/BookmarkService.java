@@ -6,7 +6,7 @@ import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateR
 import beside.sunday8turtle.pickabookserver.modules.bookmark.repository.BookmarkRepository;
 import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import beside.sunday8turtle.pickabookserver.modules.tag.domain.Tag;
-import beside.sunday8turtle.pickabookserver.modules.tag.service.TagService;
+import beside.sunday8turtle.pickabookserver.modules.tag.repository.TagRepository;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class BookmarkService {
 
     private final UserService userService;
-    private final TagService tagService;
+    private final TagRepository tagRepository;
     private final BookmarkRepository bookmarkRepository;
 
     @Transactional
@@ -35,10 +35,8 @@ public class BookmarkService {
                 .orElseThrow(NoSuchElementException::new);
 
         List<Tag> tags = request.getTags().stream()
-                .map(tag -> tagService.createTag(Tag.of(tag)))
-                .collect(Collectors.toList());
+                .map(tag -> tagRepository.findFirstByTagName(tag).orElseGet(() -> tagRepository.save(Tag.of(tag)))).collect(Collectors.toList());
 
-        //TODO: tagname으로 tagid를 찾아서 있으면 기존 BookmarkTag에 북마크 아이디 추가
         List<BookmarkTag> bookmarkTags = tags.stream().map(tag -> BookmarkTag.of(bookmark.getId(), tag.getId())).collect(Collectors.toList());
         bookmark.setBookmarkTag(bookmarkTags);
 
