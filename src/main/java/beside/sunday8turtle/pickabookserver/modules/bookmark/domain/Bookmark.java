@@ -23,7 +23,7 @@ public class Bookmark {
     private String url;
     private String description;
     private LocalDate notidate;
-    @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookmarkTag> bookmarkTags = new ArrayList<>();
     //TODO: 알림유무 필드 추가 예정
     @ManyToOne
