@@ -4,7 +4,6 @@ import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkGetResponseDTO;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPostRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPutRequestDTO;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPutResponseDTO;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
 import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +47,10 @@ public class BookmarkController {
     }
 
     @PutMapping("/detail/{bookmarkId}")
-    public CommonResponse<BookmarkPutResponseDTO> putBookmark(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long bookmarkId, @RequestBody BookmarkPutRequestDTO dto) {
+    public CommonResponse putBookmark(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long bookmarkId, @RequestBody BookmarkPutRequestDTO dto) {
         //TODO: 본인인증 메소드 구현 필요
-        return CommonResponse.success(BookmarkPutResponseDTO.fromBookmark(bookmarkService.updateBookmark(bookmarkId, dto.toUpdateRequest())));
+        bookmarkService.updateBookmark(bookmarkId, dto);
+        return CommonResponse.success();
     }
 
 }

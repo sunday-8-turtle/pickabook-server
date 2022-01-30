@@ -18,7 +18,7 @@ public class Tag {
     private long id;
     private String tagName;
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<BookmarkTag> bookmarkTagList= new ArrayList<>();;
+    private List<BookmarkTag> bookmarkTagList = new ArrayList<>();
 
     private Tag(String tagName) {
         this.tagName = tagName;

@@ -49,7 +49,6 @@ public class Bookmark {
         updateRequest.getTitleToUpdate().ifPresent(titleToUpdate -> title = titleToUpdate);
         updateRequest.getUrlToUpdate().ifPresent(urlToUpdate -> url = urlToUpdate);
         updateRequest.getDescriptionToUpdate().ifPresent(descriptionToUpdate -> description = descriptionToUpdate);
-        updateRequest.getBookmarkTagsToUpdate().ifPresent(bookmarkTagsToUpdate -> bookmarkTags = bookmarkTagsToUpdate);
         updateRequest.getNotidateToUpdate().ifPresent(notidateToUpdate -> notidate = notidateToUpdate);
         return bookmark;
     }

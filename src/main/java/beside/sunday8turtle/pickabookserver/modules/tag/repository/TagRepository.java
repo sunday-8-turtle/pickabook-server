@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Optional<Tag> findFirstByTagName(String tagName);
+
+    void deleteById(Long tagId);
+
 }
