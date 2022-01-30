@@ -41,17 +41,17 @@ public class UserController {
         user.orElseThrow(() -> new InvalidParamException());
         String accessToken = jwtTokenProvider.generateToken(String.valueOf(user.get().getEmail()), user.get().getRoleList());
         String refreshToken = jwtTokenProvider.generateRefreshToken(String.valueOf(user.get().getEmail()), user.get().getRoleList());
-        redisUtil.setValues(refreshToken, user.get().getEmail(), JwtTokenProvider.refreshTokenValidSecond);
+        redisUtil.setValues(user.get().getEmail(), refreshToken, JwtTokenProvider.refreshTokenValidSecond);
         return CommonResponse.success(new UserPostResponseDTO(accessToken, jwtTokenProvider.getExpireDate(accessToken), refreshToken));
     }
 
     @PostMapping("/reissue")
     public CommonResponse<UserPostResponseDTO> reissue(@RequestBody TokenRequestDTO dto) {
-        if(!redisUtil.hasValues(dto.getRefreshToken())) {
+        String userPk = jwtTokenProvider.getUserPk(dto.getAccessToken());
+        if(!redisUtil.hasValues(userPk) || !dto.getRefreshToken().equals(redisUtil.getValues(userPk))) {
             throw new CustomSecurityException(ErrorCode.AUTH_INVALID_REFRESH_TOKEN);
         }
-        String userEmail = redisUtil.getValues(dto.getRefreshToken());
-        String reissueToken = jwtTokenProvider.generateToken(userEmail, Arrays.asList("ROLE_USER"));
+        String reissueToken = jwtTokenProvider.generateToken(userPk, Arrays.asList("ROLE_USER"));
         return CommonResponse.success(
                 new UserPostResponseDTO(
                         reissueToken,
@@ -61,9 +61,9 @@ public class UserController {
 
     @DeleteMapping("/logout")
     public CommonResponse logout(@RequestBody TokenRequestDTO dto) {
-
-        if(redisUtil.hasValues(dto.getRefreshToken())) {
-            redisUtil.delValues(dto.getRefreshToken());
+        String userPk = jwtTokenProvider.getUserPk(dto.getAccessToken());
+        if(redisUtil.hasValues(userPk)) {
+            redisUtil.delValues(userPk);
         }
 
         return CommonResponse.success();

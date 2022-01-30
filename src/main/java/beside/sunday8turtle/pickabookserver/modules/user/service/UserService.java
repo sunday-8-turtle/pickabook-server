@@ -70,4 +70,17 @@ public class UserService implements UserDetailsService {
         return new PrincipalDetails(user);
     }
 
+    public void updateNotiEmail(long userId, boolean isEmailNoti) {
+        User user = getUserById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+        if(isEmailNoti) user.enableEmailNoti();
+        else user.disableEmailNoti();
+    }
+
+    public void updateNotiBrowser(long userId, boolean isBrowserNoti) {
+        User user = getUserById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+        if(isBrowserNoti) user.enableBrowserNoti();
+        else user.disableBrowserNoti();
+    }
 }
