@@ -31,7 +31,7 @@ public class PushEmailTasklet implements Tasklet, StepExecutionListener {
     @Override
     @BeforeStep
     public void beforeStep(StepExecution stepExecution) {
-        bookmarks = bookmarkService.getBookmarkByNotidate(currentDate);
+        bookmarks = bookmarkService.getBookmarkByEmailNoti(currentDate);
         log.info("PushEmailTasklet Before Step Start!");
     }
 

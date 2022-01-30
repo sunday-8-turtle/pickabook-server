@@ -78,4 +78,9 @@ public class BookmarkService {
         return bookmarkRepository.findAllByBrowserNoti(notidate);
     }
 
+    @Transactional(readOnly = true)
+    public List<Bookmark> getBookmarkByEmailNoti(LocalDate notidate) {
+        return bookmarkRepository.findAllByEmailNoti(notidate);
+    }
+
 }
