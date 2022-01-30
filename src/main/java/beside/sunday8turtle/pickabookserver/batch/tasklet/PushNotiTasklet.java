@@ -32,7 +32,7 @@ public class PushNotiTasklet implements Tasklet, StepExecutionListener {
     @Override
     @BeforeStep
     public void beforeStep(StepExecution stepExecution) {
-        bookmarks = bookmarkService.getBookmarkByNotidate(currentDate);
+        bookmarks = bookmarkService.getBookmarkByBrowserNoti(currentDate);
         log.info("PushNotiTasklet Before Step Start!");
     }
 

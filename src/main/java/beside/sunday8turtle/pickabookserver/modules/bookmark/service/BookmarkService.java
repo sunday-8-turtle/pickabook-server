@@ -72,4 +72,10 @@ public class BookmarkService {
     public List<Bookmark> getBookmarkByNotidate(LocalDate notidate) {
         return bookmarkRepository.findAllByNotidate(notidate);
     }
+
+    @Transactional(readOnly = true)
+    public List<Bookmark> getBookmarkByBrowserNoti(LocalDate notidate) {
+        return bookmarkRepository.findAllByBrowserNoti(notidate);
+    }
+
 }
