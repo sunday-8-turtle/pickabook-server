@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
+import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
 import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @ToString
-public class Bookmark {
+public class Bookmark extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
