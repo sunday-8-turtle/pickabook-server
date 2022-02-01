@@ -46,6 +46,7 @@ public class PushNotiTasklet implements Tasklet, StepExecutionListener {
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         log.debug("contribution : {}, chunkContext : {}", stepContribution, chunkContext);
+        notificationService.createNewNotifications(bookmarks);
         notificationService.bookmarkNotify(bookmarks);
         return RepeatStatus.FINISHED;
     }
