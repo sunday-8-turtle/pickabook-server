@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookmarkTagService {
@@ -14,11 +16,16 @@ public class BookmarkTagService {
 
     @Transactional
     public BookmarkTag createBookmarkTag(long bookmarkId, long tagId) {
-        return bookmarkTagRepository.findFirstByBookmarkIdAndTagId(bookmarkId, tagId).orElseGet(()->bookmarkTagRepository.save(BookmarkTag.of(bookmarkId,tagId)));
+        return bookmarkTagRepository.findFirstByBookmarkIdAndTagId(bookmarkId, tagId).orElseGet(() -> bookmarkTagRepository.save(BookmarkTag.of(bookmarkId, tagId)));
     }
 
     @Transactional
     public void deleteBookmarkTagByBookmarkId(long bookmarkId) {
         bookmarkTagRepository.deleteByBookmarkId(bookmarkId);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<BookmarkTag> findBookmarkTagByTagId(long tagId) {
+        return bookmarkTagRepository.findFirstByTagId(tagId);
     }
 }

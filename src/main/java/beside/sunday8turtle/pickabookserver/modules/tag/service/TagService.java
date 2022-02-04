@@ -1,6 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.tag.service;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.repository.BookmarkTagRepository;
+import beside.sunday8turtle.pickabookserver.modules.bookmarktag.service.BookmarkTagService;
 import beside.sunday8turtle.pickabookserver.modules.tag.domain.Tag;
 import beside.sunday8turtle.pickabookserver.modules.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 public class TagService {
 
     private final TagRepository tagRepository;
-    private final BookmarkTagRepository bookmarkTagRepository;
+    private final BookmarkTagService bookmarkTagService;
 
     @Transactional
     public Tag createTag(String tagName) {
@@ -25,10 +25,10 @@ public class TagService {
     @Transactional
     public void deleteTagIfNotPresentBookmarkTag() {
         List<Tag> tags = tagRepository.findAll();
-        tags.forEach(tag -> bookmarkTagRepository.findFirstByTagId(tag.getId()).orElseGet(() -> {
+        tags.forEach(tag -> bookmarkTagService.findBookmarkTagByTagId(tag.getId()).orElseGet(() -> {
             tagRepository.deleteById(tag.getId());
             return null;
         }));
-
     }
+
 }
