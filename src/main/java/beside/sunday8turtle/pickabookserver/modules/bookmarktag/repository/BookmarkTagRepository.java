@@ -11,4 +11,6 @@ public interface BookmarkTagRepository extends JpaRepository<BookmarkTag, Long> 
     Optional<BookmarkTag> findFirstByTagId(Long tagId);
 
     void deleteByBookmarkId(Long BookmarkId);
+
+    Optional<BookmarkTag> findFirstByBookmarkId(Long bookmarkId);
 }

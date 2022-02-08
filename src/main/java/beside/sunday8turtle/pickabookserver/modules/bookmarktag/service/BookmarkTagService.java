@@ -28,4 +28,11 @@ public class BookmarkTagService {
     public Optional<BookmarkTag> findBookmarkTagByTagId(long tagId) {
         return bookmarkTagRepository.findFirstByTagId(tagId);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<BookmarkTag> findBookmarkTagByBookmarkId(long bookmarkId) {
+        return bookmarkTagRepository.findFirstByBookmarkId(bookmarkId);
+    }
+
+
 }
