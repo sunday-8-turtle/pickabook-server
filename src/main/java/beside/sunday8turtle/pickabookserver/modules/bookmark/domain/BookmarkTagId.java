@@ -1,4 +1,4 @@
-package beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

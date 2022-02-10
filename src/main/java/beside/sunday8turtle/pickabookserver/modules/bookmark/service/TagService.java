@@ -1,8 +1,7 @@
-package beside.sunday8turtle.pickabookserver.modules.tag.service;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.service;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.service.BookmarkTagService;
-import beside.sunday8turtle.pickabookserver.modules.tag.domain.Tag;
-import beside.sunday8turtle.pickabookserver.modules.tag.repository.TagRepository;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +29,6 @@ public class TagService {
             return null;
         }));
     }
+
 
 }

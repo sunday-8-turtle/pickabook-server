@@ -1,6 +1,5 @@
-package beside.sunday8turtle.pickabookserver.modules.tag.domain;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import lombok.Getter;
 import lombok.ToString;
 
