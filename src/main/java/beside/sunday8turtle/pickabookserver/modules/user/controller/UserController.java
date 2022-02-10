@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.user.controller;
 
+import beside.sunday8turtle.pickabookserver.common.exception.EntityNotFoundException;
 import beside.sunday8turtle.pickabookserver.common.exception.IllegalStatusException;
 import beside.sunday8turtle.pickabookserver.common.exception.InvalidParamException;
 import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
@@ -8,10 +9,13 @@ import beside.sunday8turtle.pickabookserver.common.security.CustomSecurityExcept
 import beside.sunday8turtle.pickabookserver.common.util.RedisUtil;
 import beside.sunday8turtle.pickabookserver.config.jwt.JwtTokenProvider;
 import beside.sunday8turtle.pickabookserver.modules.mail.service.MailService;
+import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import beside.sunday8turtle.pickabookserver.modules.user.dto.*;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -35,7 +39,7 @@ public class UserController {
         return CommonResponse.success();
     }
 
-    @PostMapping("")
+    @PostMapping("/login")
     public CommonResponse<UserPostResponseDTO> login(@RequestBody UserPostRequestDTO dto) {
         Optional<User> user = userService.getUserByEmailAndPassword(dto.getEmail(), dto.getPassword());
         user.orElseThrow(() -> new InvalidParamException());
@@ -81,6 +85,13 @@ public class UserController {
     public CommonResponse emailCodeCertification(@RequestBody UserCertificationRequestDTO dto) {
         userService.certificationCode(dto.getEmail(), dto.getCertificationCode());
         return CommonResponse.success();
+    }
+
+    @GetMapping("")
+    public CommonResponse getUser(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        long userId = principalDetails.getUser().getId();
+        User user = userService.getUserById(userId).orElseThrow(EntityNotFoundException::new);
+        return CommonResponse.success(UserGetResponseDTO.fromUser(user));
     }
 
 }
