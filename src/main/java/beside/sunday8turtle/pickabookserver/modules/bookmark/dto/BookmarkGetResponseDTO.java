@@ -1,8 +1,8 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.dto;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
-import beside.sunday8turtle.pickabookserver.modules.tag.domain.Tag;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.BookmarkTag;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
 import lombok.*;
 import org.springframework.data.domain.Page;
 
@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookmarkGetResponseDTO {
+    private Long bookmarkId;
     private String title;
     private String url;
     private String description;
@@ -25,6 +26,7 @@ public class BookmarkGetResponseDTO {
 
     public static BookmarkGetResponseDTO fromBookmark(Bookmark bookmark) {
         return new BookmarkGetResponseDTO(
+                bookmark.getId(),
                 bookmark.getTitle(),
                 bookmark.getUrl(),
                 bookmark.getDescription(),

@@ -1,12 +1,11 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.service;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.BookmarkTag;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPostRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPutRequestDTO;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.repository.BookmarkRepository;
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.service.BookmarkTagService;
-import beside.sunday8turtle.pickabookserver.modules.tag.service.TagService;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -49,6 +49,13 @@ public class BookmarkService {
     public Page<Bookmark> getBookmarksByUserId(long userId, Pageable pageable) {
         return userService.getUserById(userId)
                 .map(user -> bookmarkRepository.findAllByUserId(user.getId(), pageable))
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Bookmark> getBookmarksByUserId(long userId) {
+        return userService.getUserById(userId)
+                .map(user -> bookmarkRepository.findAllByUserId(user.getId()))
                 .orElseThrow(NoSuchElementException::new);
     }
 
@@ -104,4 +111,15 @@ public class BookmarkService {
         return bookmarkRepository.findAllByEmailNoti(notidate);
     }
 
+    @Transactional(readOnly = true)
+    public List<Tag> getTagsByUserId(long userId) {
+        //TODO: 태그 중복 제거 필요
+        List<Tag> tagList = new ArrayList<>();
+        List<List<BookmarkTag>> bookmarkTagList = new ArrayList<>();
+        List<Bookmark> bookmarks = userService.getUserById(userId)
+                .map(user -> this.getBookmarksByUserId(user.getId())).orElseThrow(NoSuchElementException::new);
+        bookmarks.forEach(bookmark -> bookmarkTagList.add(bookmarkTagService.findBookmarkTagsByBookmarkId(bookmark.getId())));
+        bookmarkTagList.forEach(bookmarkTags -> bookmarkTags.forEach(bookmarkTag -> tagList.add(bookmarkTag.getTag())));
+        return tagList;
+    }
 }

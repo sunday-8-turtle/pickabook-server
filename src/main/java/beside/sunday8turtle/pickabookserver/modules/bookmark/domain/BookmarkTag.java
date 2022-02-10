@@ -1,7 +1,5 @@
-package beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
-import beside.sunday8turtle.pickabookserver.modules.tag.domain.Tag;
 import lombok.Getter;
 
 import javax.persistence.*;
