@@ -2,7 +2,6 @@ package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
 import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.Getter;
 import lombok.ToString;
@@ -26,7 +25,6 @@ public class Bookmark extends BaseTimeEntity {
     private LocalDate notidate;
     @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookmarkTag> bookmarkTags = new ArrayList<>();
-    //TODO: 알림유무 필드 추가 예정
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

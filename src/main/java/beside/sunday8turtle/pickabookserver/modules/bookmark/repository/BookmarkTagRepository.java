@@ -1,8 +1,9 @@
-package beside.sunday8turtle.pickabookserver.modules.bookmarktag.repository;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.repository;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.BookmarkTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BookmarkTagRepository extends JpaRepository<BookmarkTag, Long> {
@@ -13,4 +14,6 @@ public interface BookmarkTagRepository extends JpaRepository<BookmarkTag, Long> 
     void deleteByBookmarkId(Long BookmarkId);
 
     Optional<BookmarkTag> findFirstByBookmarkId(Long bookmarkId);
+
+    List<BookmarkTag> findAllByBookmarkId(Long bookmarkId);
 }
