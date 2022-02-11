@@ -4,6 +4,7 @@ import org.springframework.batch.core.configuration.annotation.DefaultBatchConfi
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
@@ -11,6 +12,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableBatchProcessing // Spring Batch 을 유효화
 @EnableScheduling //Spring Schedule 을 유효화
+@EnableJpaAuditing//jpaAuddit 적용
 public class PickabookServerApplication extends DefaultBatchConfigurer {
 
 	@Override

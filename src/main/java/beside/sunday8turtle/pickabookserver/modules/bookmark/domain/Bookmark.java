@@ -1,7 +1,7 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
+import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkUpdateRequest;
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @ToString
-public class Bookmark {
+public class Bookmark extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,8 @@ public class Bookmark {
     private String url;
     private String description;
     private LocalDate notidate;
-    @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookmarkTag> bookmarkTags = new ArrayList<>();
-    //TODO: 알림유무 필드 추가 예정
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -49,7 +48,6 @@ public class Bookmark {
         updateRequest.getTitleToUpdate().ifPresent(titleToUpdate -> title = titleToUpdate);
         updateRequest.getUrlToUpdate().ifPresent(urlToUpdate -> url = urlToUpdate);
         updateRequest.getDescriptionToUpdate().ifPresent(descriptionToUpdate -> description = descriptionToUpdate);
-        updateRequest.getBookmarkTagsToUpdate().ifPresent(bookmarkTagsToUpdate -> bookmarkTags = bookmarkTagsToUpdate);
         updateRequest.getNotidateToUpdate().ifPresent(notidateToUpdate -> notidate = notidateToUpdate);
         return bookmark;
     }

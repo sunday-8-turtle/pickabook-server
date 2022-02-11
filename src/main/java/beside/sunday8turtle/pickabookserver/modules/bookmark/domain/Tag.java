@@ -1,6 +1,5 @@
-package beside.sunday8turtle.pickabookserver.modules.tag.domain;
+package beside.sunday8turtle.pickabookserver.modules.bookmark.domain;
 
-import beside.sunday8turtle.pickabookserver.modules.bookmarktag.domain.BookmarkTag;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -18,7 +17,7 @@ public class Tag {
     private long id;
     private String tagName;
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<BookmarkTag> bookmarkTagList= new ArrayList<>();;
+    private List<BookmarkTag> bookmarkTagList = new ArrayList<>();
 
     private Tag(String tagName) {
         this.tagName = tagName;

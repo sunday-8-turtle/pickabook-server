@@ -1,13 +1,22 @@
 package beside.sunday8turtle.pickabookserver.modules.notification.controller;
 
+import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
 import beside.sunday8turtle.pickabookserver.modules.notification.domain.Notification;
+import beside.sunday8turtle.pickabookserver.modules.notification.dto.NotificationGetResponseDTO;
+import beside.sunday8turtle.pickabookserver.modules.notification.service.NotificationService;
+import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
+import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -15,6 +24,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping("/notification")
 public class NotificationController {
+
+    private final NotificationService notificationService;
 
     @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
     public SseEmitter subscribe(@PathVariable long id) {
@@ -52,4 +63,31 @@ public class NotificationController {
 
         deadIds.forEach(Notification.CLIENTS::remove);
     }
+
+    // Notification 생성 테스트
+    @PostMapping("")
+    public CommonResponse createNotification(@RequestParam long bookmarkId) {
+        notificationService.createNewNotificationByBookmarkId(bookmarkId);
+        return CommonResponse.success();
+    }
+
+    @PostMapping("/check/{notificationId}")
+    public CommonResponse checkNotification(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long notificationId) {
+        // TODO: Auth User와 Notification User가 동일한지 체크
+        notificationService.updateNotificationCheck(notificationId);
+        return CommonResponse.success();
+    }
+
+    @GetMapping("/{notificationId}")
+    public CommonResponse<NotificationGetResponseDTO> getNotification(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long notificationId) {
+        // TODO: Auth User와 Notification User가 동일한지 체크
+        return CommonResponse.success(NotificationGetResponseDTO.fromNotification(notificationService.getNotificationByNotificatonId(notificationId)));
+    }
+
+    @GetMapping("")
+    public CommonResponse<List<NotificationGetResponseDTO>> getNotifications(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size) {
+        long userId = principalDetails.getUser().getId();
+        return CommonResponse.success(NotificationGetResponseDTO.fromNotifications(notificationService.getNotificationsByUserId(userId, PageRequest.of(page, size, Sort.Direction.DESC, "id"))));
+    }
+
 }
