@@ -21,7 +21,8 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     void deleteById(long bookmarkId);
 
-    List<Bookmark> findAllByNotidate(LocalDate Notidate);
+    @Query("select DISTINCT b from Bookmark b ,BookmarkTag t where b.user.id = :userId and b.id = t.bookmarkId and(b.title LIKE CONCAT('%',:search,'%') or b.description LIKE CONCAT('%',:search,'%') or t.tag.tagName LIKE CONCAT('%',:search,'%'))")
+    Page<Bookmark> searchAllByUserIdAndTitleOrDescriptionOrTagName(long userId, String search, Pageable pageable);
 
     @Query("select b from Bookmark b where b.notidate = :searchDate and b.user.isBrowserNoti = true")
     List<Bookmark> findAllByBrowserNoti(@Param("searchDate") LocalDate searchDate);

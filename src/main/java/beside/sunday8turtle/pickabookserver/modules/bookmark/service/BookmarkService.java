@@ -97,11 +97,6 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<Bookmark> getBookmarkByNotidate(LocalDate notidate) {
-        return bookmarkRepository.findAllByNotidate(notidate);
-    }
-
-    @Transactional(readOnly = true)
     public List<Bookmark> getBookmarkByBrowserNoti(LocalDate notidate) {
         return bookmarkRepository.findAllByBrowserNoti(notidate);
     }
@@ -109,6 +104,13 @@ public class BookmarkService {
     @Transactional(readOnly = true)
     public List<Bookmark> getBookmarkByEmailNoti(LocalDate notidate) {
         return bookmarkRepository.findAllByEmailNoti(notidate);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Bookmark> searchBookmarksByUserIdAndTitleAndDescriptionAndTagName(long userId, String search, Pageable pageable) {
+        return userService.getUserById(userId)
+                .map(user -> bookmarkRepository.searchAllByUserIdAndTitleOrDescriptionOrTagName(user.getId(), search, pageable))
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional(readOnly = true)

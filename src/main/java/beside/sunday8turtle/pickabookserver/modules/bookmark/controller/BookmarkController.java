@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class BookmarkController {
     @GetMapping
     public CommonResponse<List<BookmarkGetResponseDTO>> getBookmarks(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size) {
         long userId = principalDetails.getUser().getId();
-        return CommonResponse.success(BookmarkGetResponseDTO.fromBookmarks(bookmarkService.getBookmarksByUserId(userId, PageRequest.of(page, size))));
+        return CommonResponse.success(BookmarkGetResponseDTO.fromBookmarks(bookmarkService.getBookmarksByUserId(userId, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate")))));
     }
 
     @GetMapping("/{bookmarkId}")
@@ -54,6 +55,11 @@ public class BookmarkController {
         return CommonResponse.success();
     }
 
+    @GetMapping("/search")
+    public CommonResponse<List<BookmarkGetResponseDTO>> searchBookmarks(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size, @RequestParam String search) {
+        long userId = principalDetails.getUser().getId();
+        return CommonResponse.success(BookmarkGetResponseDTO.fromBookmarks(bookmarkService.searchBookmarksByUserIdAndTitleAndDescriptionAndTagName(userId, search, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate")))));
+    }
 
     @GetMapping("/tag")
     public CommonResponse<List<TagGetResponseDTO>> getTagsByUserId(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size) {
