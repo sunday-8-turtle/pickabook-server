@@ -15,6 +15,9 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     Page<Bookmark> findAllByUserId(long userId, Pageable pageable);
 
+    @Query("select b from Bookmark b ,BookmarkTag t where b.user.id = :userId and b.id = t.bookmarkId and t.tagId = :tagId")
+    Page<Bookmark> findAllByUserIdAndTagId(long userId, long tagId, Pageable pageable);
+
     List<Bookmark> findAllByUserId(long userId);
 
     Optional<Bookmark> findById(long bookmarkId);
