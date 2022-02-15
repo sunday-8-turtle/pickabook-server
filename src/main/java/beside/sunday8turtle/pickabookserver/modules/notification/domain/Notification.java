@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.notification.domain;
 
+import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @ToString
 @Table(name = "NOTIFICATION")
-public class Notification {
+public class Notification extends BaseTimeEntity {
 
     public static Map<Long, SseEmitter> CLIENTS = new ConcurrentHashMap<>();
 
