@@ -83,4 +83,20 @@ public class UserService implements UserDetailsService {
         if(isBrowserNoti) user.enableBrowserNoti();
         else user.disableBrowserNoti();
     }
+
+    public void deleteUser(long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    public void updatePassword(long userId, String password) {
+        User user = getUserById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+        user.updatePassword(getEncodePassword(password));
+    }
+
+    public void updateNickname(long userId, String nickname) {
+        User user = getUserById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+        user.updateNickname(nickname);
+    }
 }

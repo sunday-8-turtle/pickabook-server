@@ -94,4 +94,11 @@ public class UserController {
         return CommonResponse.success(UserGetResponseDTO.fromUser(user));
     }
 
+    @DeleteMapping("")
+    public CommonResponse deleteUser(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        long userId = principalDetails.getUser().getId();
+        userService.deleteUser(userId);
+        return CommonResponse.success();
+    }
+
 }
