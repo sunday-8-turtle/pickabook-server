@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SettingPasswordRequestDTO {
-    private String email;
+    private String beforePassword;
     private String password;
+    private String rePassword;
 }

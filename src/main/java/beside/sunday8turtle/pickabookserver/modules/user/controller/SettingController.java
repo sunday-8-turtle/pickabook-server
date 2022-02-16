@@ -34,9 +34,9 @@ public class SettingController {
     }
 
     @PutMapping("/password")
-    public CommonResponse updatePassword(@RequestBody SettingPasswordRequestDTO dto) {
-        User user = userService.getUserByEmail(dto.getEmail()).orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
-        userService.updatePassword(user.getId(), dto.getPassword());
+    public CommonResponse updatePassword(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody SettingPasswordRequestDTO dto) {
+        long userId = principalDetails.getUser().getId();
+        userService.updatePassword(userId, dto.getBeforePassword(), dto.getPassword(), dto.getRePassword());
         return CommonResponse.success();
     }
 
