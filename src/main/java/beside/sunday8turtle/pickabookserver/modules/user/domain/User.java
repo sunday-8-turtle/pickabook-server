@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.user.domain;
 
+import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @ToString
 @Table(name = "USERS")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,5 +76,11 @@ public class User {
         this.isEmailNoti = false;
     }
 
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }
