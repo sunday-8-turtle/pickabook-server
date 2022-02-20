@@ -2,10 +2,7 @@ package beside.sunday8turtle.pickabookserver.modules.bookmark.controller;
 
 import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkGetResponseDTO;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPostRequestDTO;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkPutRequestDTO;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.TagGetResponseDTO;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.*;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
 import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +70,12 @@ public class BookmarkController {
         List<Tag> tags = bookmarkService.getTagsByUserId(userId);
         Page<Tag> pages = new PageImpl<>(tags, PageRequest.of(page, size), tags.size());
         return CommonResponse.success(TagGetResponseDTO.fromTags(pages));
+    }
+
+    @GetMapping("/duplication")
+    public CommonResponse<BookmarkDuplicationResponseDTO> getDuplicationUrl(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody BookmarkDuplicationRequestDTO dto) {
+        long userId = principalDetails.getUser().getId();
+        return CommonResponse.success(BookmarkDuplicationResponseDTO.from(bookmarkService.isDuplicationUrl(userId, dto.getUrl())));
     }
 
 }

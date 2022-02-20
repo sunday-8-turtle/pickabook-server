@@ -32,4 +32,8 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     @Query("select b from Bookmark b where b.notidate = :searchDate and b.user.isEmailNoti = true")
     List<Bookmark> findAllByEmailNoti(@Param("searchDate") LocalDate searchDate);
+
+    @Query("select count (b.id) > 0 from Bookmark b where b.user.id = :userId and b.url = :url")
+    boolean existByUserIdAndUrl(long userId, String url);
+
 }
