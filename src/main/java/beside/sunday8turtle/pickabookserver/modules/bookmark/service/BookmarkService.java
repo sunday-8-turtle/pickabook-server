@@ -134,10 +134,10 @@ public class BookmarkService {
 
     @Transactional(readOnly = true)
     public boolean isDuplicationUrl(long userId, String url) {
-        return userService.getUserById(userId)
-                .map(user -> bookmarkRepository.existByUserIdAndUrl(user.getId(), url))
-                .orElseThrow(NoSuchElementException::new);
-
-
+        int size = userService.getUserById(userId)
+                .map(user -> bookmarkRepository.findAllByUserIdAndUrl(user.getId(), url))
+                .orElseThrow(NoSuchElementException::new).size();
+        return size > 0;
     }
+
 }
