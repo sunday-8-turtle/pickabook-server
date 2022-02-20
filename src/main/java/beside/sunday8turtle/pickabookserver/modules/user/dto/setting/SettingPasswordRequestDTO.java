@@ -10,5 +10,4 @@ import lombok.*;
 public class SettingPasswordRequestDTO {
     private String beforePassword;
     private String password;
-    private String rePassword;
 }

@@ -131,4 +131,13 @@ public class BookmarkService {
         bookmarkTagList.forEach(bookmarkTags -> bookmarkTags.forEach(bookmarkTag -> tagList.add(bookmarkTag.getTag())));
         return tagList;
     }
+
+    @Transactional(readOnly = true)
+    public boolean isDuplicationUrl(long userId, String url) {
+        return userService.getUserById(userId)
+                .map(user -> bookmarkRepository.existByUserIdAndUrl(user.getId(), url))
+                .orElseThrow(NoSuchElementException::new);
+
+
+    }
 }

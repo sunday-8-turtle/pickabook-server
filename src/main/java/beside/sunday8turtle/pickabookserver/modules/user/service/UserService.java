@@ -89,18 +89,15 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
-    public void updatePassword(long userId, String beforePassword, String password, String rePassword) {
+    public void updatePassword(long userId, String beforePassword, String password) {
         User user = getUserById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
-        updatePasswordValidCheck(user, beforePassword, password, rePassword);
+        beforePasswordValidCheck(user, beforePassword);
         user.updatePassword(getEncodePassword(password));
     }
 
-    private void updatePasswordValidCheck(User user, String beforePassword, String password, String rePassword) {
-        // 1. 현재 비밀번호 적합성 체크
+    private void beforePasswordValidCheck(User user, String beforePassword) {
         if(!user.matchesPassword(beforePassword, passwordEncoder)) throw new InvalidParamException();
-        // 2. 신규비밀번호, 신규재입력비밀번호 일치 체크
-        if(!password.equals(rePassword)) throw new InvalidParamException();
     }
 
     public void updateNickname(long userId, String nickname) {
