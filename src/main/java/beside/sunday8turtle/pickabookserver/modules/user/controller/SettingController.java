@@ -36,7 +36,7 @@ public class SettingController {
     @PutMapping("/password")
     public CommonResponse updatePassword(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody SettingPasswordRequestDTO dto) {
         long userId = principalDetails.getUser().getId();
-        userService.updatePassword(userId, dto.getBeforePassword(), dto.getPassword(), dto.getRePassword());
+        userService.updatePassword(userId, dto.getBeforePassword(), dto.getPassword());
         return CommonResponse.success();
     }
 
