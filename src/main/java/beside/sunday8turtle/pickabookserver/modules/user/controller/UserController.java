@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class UserController {
     private final MailService mailService;
 
     @PostMapping("/signup")
-    public CommonResponse signup(@RequestBody UserSignUpRequestDTO dto) {
+    public CommonResponse signup(@RequestBody @Valid UserSignUpRequestDTO dto) {
         userService.getUserByEmail(dto.getEmail()).ifPresent(m -> { throw new IllegalStatusException("이미 존재하는 회원입니다."); });
         userService.registerUser(dto);
         mailService.joinCompleteMailSend(dto); // 회원가입 완료 메일 발송
