@@ -105,4 +105,9 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
         user.updateNickname(nickname);
     }
+
+    public boolean duplicateCheckByEmail(String email) {
+        User user = getUserByEmail(email).orElse(null);
+        return (user == null) ? false : true;
+    }
 }
