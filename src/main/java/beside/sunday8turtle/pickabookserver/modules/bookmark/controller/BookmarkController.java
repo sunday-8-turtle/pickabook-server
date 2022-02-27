@@ -72,7 +72,7 @@ public class BookmarkController {
         return CommonResponse.success(TagGetResponseDTO.fromTags(pages));
     }
 
-    @GetMapping("/duplication")
+    @PostMapping("/duplication")
     public CommonResponse<BookmarkDuplicationResponseDTO> getDuplicationUrl(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody BookmarkDuplicationRequestDTO dto) {
         long userId = principalDetails.getUser().getId();
         return CommonResponse.success(BookmarkDuplicationResponseDTO.from(bookmarkService.isDuplicationUrl(userId, dto.getUrl())));

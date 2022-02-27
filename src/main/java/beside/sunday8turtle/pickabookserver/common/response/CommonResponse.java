@@ -40,6 +40,16 @@ public class CommonResponse<T> {
         return success(null, message);
     }
 
+    public static <T> CommonResponse fail(T data, String message, String errorCode) {
+        return CommonResponse.builder()
+                .result(Result.FAIL)
+                .data(data)
+                .message(message)
+                .errorCode(errorCode)
+                .timestamp(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()))
+                .build();
+    }
+
     public static CommonResponse fail(String message, String errorCode) {
         return CommonResponse.builder()
                 .result(Result.FAIL)
