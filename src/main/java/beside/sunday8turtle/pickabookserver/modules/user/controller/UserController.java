@@ -75,6 +75,7 @@ public class UserController {
 
     @PostMapping("/email/send")
     public CommonResponse emailCodeSend(@RequestBody UserCertificationRequestDTO dto) {
+        userService.getUserByEmail(dto.getEmail()).ifPresent(m -> { throw new IllegalStatusException("이미 존재하는 회원입니다."); });
         String emailCode = userService.generateEmailCode(dto.getEmail());
         dto.setCertificationCode(emailCode);
         mailService.certificationCodeSend(dto);
@@ -85,6 +86,12 @@ public class UserController {
     public CommonResponse emailCodeCertification(@RequestBody UserCertificationRequestDTO dto) {
         userService.certificationCode(dto.getEmail(), dto.getCertificationCode());
         return CommonResponse.success();
+    }
+
+    @PostMapping("/email/duplicate")
+    public CommonResponse emailDuplicateCheck(@RequestBody UserCertificationRequestDTO dto) {
+        boolean result = userService.duplicateCheckByEmail(dto.getEmail());
+        return CommonResponse.success(new UserDuplicateResponseDTO(result));
     }
 
     @GetMapping("")
