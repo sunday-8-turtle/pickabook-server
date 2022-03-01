@@ -1,13 +1,10 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.controller;
 
 import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
-import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.*;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
 import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -67,9 +64,7 @@ public class BookmarkController {
     @GetMapping("/tags")
     public CommonResponse<List<TagGetResponseDTO>> getTags(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size) {
         long userId = principalDetails.getUser().getId();
-        List<Tag> tags = bookmarkService.getTagsByUserId(userId);
-        Page<Tag> pages = new PageImpl<>(tags, PageRequest.of(page, size), tags.size());
-        return CommonResponse.success(TagGetResponseDTO.fromTags(pages));
+        return CommonResponse.success(TagGetResponseDTO.fromTags(bookmarkService.getTagsByUserId(userId, PageRequest.of(page, size))));
     }
 
     @PostMapping("/duplication")
