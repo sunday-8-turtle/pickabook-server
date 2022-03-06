@@ -9,6 +9,7 @@ public class BookmarkUpdateRequest {
     private final String titleToUpdate;
     private final String urlToUpdate;
     private final String descriptionToUpdate;
+    private final String imageToUpdate;
     private final LocalDate notidateToUpdate;
 
     public static BookmarkUpdateRequestBuilder builder() {
@@ -27,6 +28,10 @@ public class BookmarkUpdateRequest {
         return ofNullable(descriptionToUpdate);
     }
 
+    public Optional<String> getImageToUpdate() {
+        return ofNullable(imageToUpdate);
+    }
+
     public Optional<LocalDate> getNotidateToUpdate() {
         return ofNullable(notidateToUpdate);
     }
@@ -35,6 +40,7 @@ public class BookmarkUpdateRequest {
         this.titleToUpdate = builder.titleToUpdate;
         this.urlToUpdate = builder.urlToUpdate;
         this.descriptionToUpdate = builder.descriptionToUpdate;
+        this.imageToUpdate = builder.imageToUpdate;
         this.notidateToUpdate = builder.notidateToUpdate;
     }
 
@@ -42,6 +48,7 @@ public class BookmarkUpdateRequest {
         private String titleToUpdate;
         private String urlToUpdate;
         private String descriptionToUpdate;
+        private String imageToUpdate;
         private LocalDate notidateToUpdate;
 
         public BookmarkUpdateRequestBuilder titleToUpdate(String titleToUpdate) {
@@ -56,6 +63,11 @@ public class BookmarkUpdateRequest {
 
         public BookmarkUpdateRequestBuilder descriptionToUpdate(String descriptionToUpdate) {
             this.descriptionToUpdate = descriptionToUpdate;
+            return this;
+        }
+
+        public BookmarkUpdateRequestBuilder imageToUpdate(String imageToUpdate) {
+            this.imageToUpdate = imageToUpdate;
             return this;
         }
 

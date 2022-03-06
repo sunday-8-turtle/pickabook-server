@@ -31,7 +31,7 @@ public class BookmarkService {
     public Bookmark createNewBookmark(long userId, BookmarkPostRequestDTO request) {
         //북마크 객체 생성
         Bookmark bookmark = userService.getUserById(userId)
-                .map(user -> user.addBookmark(request.getTitle(), request.getUrl(), request.getDescription(), request.getNotidate(), user))
+                .map(user -> user.addBookmark(request.getTitle(), request.getUrl(), request.getDescription(), request.getImage(), request.getNotidate(), user))
                 .map(bookmarkRepository::save)
                 .orElseThrow(NoSuchElementException::new);
         //북마크태그, 태그 생성
