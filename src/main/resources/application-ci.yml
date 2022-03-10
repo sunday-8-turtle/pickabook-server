@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    location: ci
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  jwt:
+    secret: govlepel@$&
+  redis:
+    host: scat.redistogo.com
+    password: ENC(FnuS29hOJ28uE/g2URiaWmBXZeLdZ1lHBHVDyWE3lrb5JJi2+Xt2fePGa1dYuo6B)
+    port: 10273
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pickaboookk@gmail.com
+    password: ENC(YtARssZWtpoynITMAQJB7QMCPRIZ7+OggEnJ1KuBYb4=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

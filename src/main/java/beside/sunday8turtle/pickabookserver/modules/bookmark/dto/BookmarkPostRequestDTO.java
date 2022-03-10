@@ -14,6 +14,7 @@ public class BookmarkPostRequestDTO {
         private String title;
         private String url;
         private String description;
+        private String image;
         private List<String> tags;
         private LocalDate notidate;
 }

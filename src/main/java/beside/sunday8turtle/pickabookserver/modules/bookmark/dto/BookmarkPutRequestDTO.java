@@ -16,6 +16,7 @@ public class BookmarkPutRequestDTO {
         private String title;
         private String url;
         private String description;
+        private String image;
         private List<String> tags;
         private LocalDate notidate;
 
@@ -23,6 +24,7 @@ public class BookmarkPutRequestDTO {
                 return builder().titleToUpdate(title)
                         .urlToUpdate(url)
                         .descriptionToUpdate(description)
+                        .imageToUpdate(image)
                         .notidateToUpdate(notidate)
                         .build();
         }

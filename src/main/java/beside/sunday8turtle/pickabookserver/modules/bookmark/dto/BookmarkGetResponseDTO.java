@@ -21,6 +21,7 @@ public class BookmarkGetResponseDTO {
     private String title;
     private String url;
     private String description;
+    private String image;
     private List<String> tags;
     private LocalDate notidate;
 
@@ -30,6 +31,7 @@ public class BookmarkGetResponseDTO {
                 bookmark.getTitle(),
                 bookmark.getUrl(),
                 bookmark.getDescription(),
+                bookmark.getImage(),
                 bookmark.getBookmarkTags().stream()
                         .map(BookmarkTag::getTag)
                         .map(Tag::getTagName)

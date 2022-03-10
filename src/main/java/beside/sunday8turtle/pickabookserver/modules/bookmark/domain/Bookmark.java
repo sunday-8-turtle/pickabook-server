@@ -22,6 +22,7 @@ public class Bookmark extends BaseTimeEntity {
     private String title;
     private String url;
     private String description;
+    private String image;
     private LocalDate notidate;
     @OneToMany(mappedBy = "bookmark", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookmarkTag> bookmarkTags = new ArrayList<>();
@@ -29,10 +30,11 @@ public class Bookmark extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Bookmark(String title, String url, String description, LocalDate notidate, User user) {
+    private Bookmark(String title, String url, String description, String image, LocalDate notidate, User user) {
         this.title = title;
         this.url = url;
         this.description = description;
+        this.image = image;
         this.notidate = notidate;
         this.user = user;
     }
@@ -40,14 +42,15 @@ public class Bookmark extends BaseTimeEntity {
     protected Bookmark() {
     }
 
-    public static Bookmark of(String title, String url, String description, LocalDate notidate, User user) {
-        return new Bookmark(title, url, description, notidate, user);
+    public static Bookmark of(String title, String url, String description, String image, LocalDate notidate, User user) {
+        return new Bookmark(title, url, description, image, notidate, user);
     }
 
     public Bookmark updateBookmark(Bookmark bookmark, BookmarkUpdateRequest updateRequest) {
         updateRequest.getTitleToUpdate().ifPresent(titleToUpdate -> title = titleToUpdate);
         updateRequest.getUrlToUpdate().ifPresent(urlToUpdate -> url = urlToUpdate);
         updateRequest.getDescriptionToUpdate().ifPresent(descriptionToUpdate -> description = descriptionToUpdate);
+        updateRequest.getImageToUpdate().ifPresent(imageToUpdate -> image = imageToUpdate);
         updateRequest.getNotidateToUpdate().ifPresent(notidateToUpdate -> notidate = notidateToUpdate);
         return bookmark;
     }

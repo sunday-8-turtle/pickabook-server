@@ -4,7 +4,6 @@ import beside.sunday8turtle.pickabookserver.common.entity.BaseTimeEntity;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import lombok.Getter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -56,8 +55,8 @@ public class User extends BaseTimeEntity {
         return passwordEncoder.matches(rawPassword, password);
     }
 
-    public Bookmark addBookmark(String title, String url, String description, LocalDate notidate, User user) {
-        return Bookmark.of(title, url, description, notidate, user);
+    public Bookmark addBookmark(String title, String url, String description, String image, LocalDate notidate, User user) {
+        return Bookmark.of(title, url, description, image, notidate, user);
     }
 
     public void enableBrowserNoti() {

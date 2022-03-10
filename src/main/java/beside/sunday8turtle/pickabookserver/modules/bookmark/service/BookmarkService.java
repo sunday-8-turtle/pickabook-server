@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class BookmarkService {
     public Bookmark createNewBookmark(long userId, BookmarkPostRequestDTO request) {
         //북마크 객체 생성
         Bookmark bookmark = userService.getUserById(userId)
-                .map(user -> user.addBookmark(request.getTitle(), request.getUrl(), request.getDescription(), request.getNotidate(), user))
+                .map(user -> user.addBookmark(request.getTitle(), request.getUrl(), request.getDescription(), request.getImage(), request.getNotidate(), user))
                 .map(bookmarkRepository::save)
                 .orElseThrow(NoSuchElementException::new);
         //북마크태그, 태그 생성
@@ -121,15 +120,8 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<Tag> getTagsByUserId(long userId) {
-        //TODO: 태그 중복 제거 필요
-        List<Tag> tagList = new ArrayList<>();
-        List<List<BookmarkTag>> bookmarkTagList = new ArrayList<>();
-        List<Bookmark> bookmarks = userService.getUserById(userId)
-                .map(user -> this.getBookmarksByUserId(user.getId())).orElseThrow(NoSuchElementException::new);
-        bookmarks.forEach(bookmark -> bookmarkTagList.add(bookmarkTagService.findBookmarkTagsByBookmarkId(bookmark.getId())));
-        bookmarkTagList.forEach(bookmarkTags -> bookmarkTags.forEach(bookmarkTag -> tagList.add(bookmarkTag.getTag())));
-        return tagList;
+    public Page<Tag> getTagsByUserId(long userId, Pageable pageable) {
+        return tagService.getTagsByUserId(userId, pageable);
     }
 
     @Transactional(readOnly = true)
