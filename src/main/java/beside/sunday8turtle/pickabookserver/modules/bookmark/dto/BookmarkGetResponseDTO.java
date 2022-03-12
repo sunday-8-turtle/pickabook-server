@@ -24,6 +24,7 @@ public class BookmarkGetResponseDTO {
     private String image;
     private List<String> tags;
     private LocalDate notidate;
+    private LocalDate createdDate;
 
     public static BookmarkGetResponseDTO fromBookmark(Bookmark bookmark) {
         return new BookmarkGetResponseDTO(
@@ -36,7 +37,8 @@ public class BookmarkGetResponseDTO {
                         .map(BookmarkTag::getTag)
                         .map(Tag::getTagName)
                         .collect(toList()),
-                bookmark.getNotidate()
+                bookmark.getNotidate(),
+                bookmark.getCreatedDate()
         );
     }
 
