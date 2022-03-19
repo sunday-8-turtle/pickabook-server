@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/setting/**", "/notification/**", "/bookmark/**", "/user").hasRole("USER")
+                .antMatchers("/setting/**", "/bookmark/**", "/user",
+                             "/notification", "/notification/check/*", "/notification/*").hasRole("USER")
                         .anyRequest().permitAll()
                 .and()
                     .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
