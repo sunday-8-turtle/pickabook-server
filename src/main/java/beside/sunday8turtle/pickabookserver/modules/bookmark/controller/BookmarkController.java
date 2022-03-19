@@ -20,10 +20,9 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @PostMapping
-    public CommonResponse postBookmark(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody BookmarkPostRequestDTO dto) {
+    public CommonResponse<BookmarkPostResponseDTO> postBookmark(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody BookmarkPostRequestDTO dto) {
         long userId = principalDetails.getUser().getId();
-        bookmarkService.createNewBookmark(userId, dto);
-        return CommonResponse.success();
+        return CommonResponse.success(BookmarkPostResponseDTO.fromBookmark(bookmarkService.createNewBookmark(userId, dto)));
     }
 
     @GetMapping
