@@ -3,9 +3,9 @@ package beside.sunday8turtle.pickabookserver.modules.notification.controller;
 import beside.sunday8turtle.pickabookserver.common.response.CommonResponse;
 import beside.sunday8turtle.pickabookserver.modules.notification.domain.Notification;
 import beside.sunday8turtle.pickabookserver.modules.notification.dto.NotificationGetResponseDTO;
+import beside.sunday8turtle.pickabookserver.modules.notification.dto.NotificationPostResponseDTO;
 import beside.sunday8turtle.pickabookserver.modules.notification.service.NotificationService;
 import beside.sunday8turtle.pickabookserver.modules.user.PrincipalDetails;
-import beside.sunday8turtle.pickabookserver.modules.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -66,8 +66,8 @@ public class NotificationController {
 
     // Notification 생성 테스트
     @PostMapping("")
-    public CommonResponse createNotification(@RequestParam long bookmarkId) {
-        notificationService.createNewNotificationByBookmarkId(bookmarkId);
+    public CommonResponse createNotification(@RequestBody NotificationPostResponseDTO dto) {
+        notificationService.createNewNotification(dto);
         return CommonResponse.success();
     }
 
