@@ -1,6 +1,7 @@
 package beside.sunday8turtle.pickabookserver.modules.notification.dto;
 
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
+import beside.sunday8turtle.pickabookserver.modules.bookmark.dto.BookmarkGetResponseDTO;
 import beside.sunday8turtle.pickabookserver.modules.notification.domain.Notification;
 import lombok.*;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,8 @@ public class NotificationGetResponseDTO {
     private LocalDate notidate;
     private String message;
     private String url;
-    boolean check;
+    private boolean check;
+    private BookmarkGetResponseDTO bookmark;
 
     public static NotificationGetResponseDTO fromNotification(Notification notification) {
         return new NotificationGetResponseDTO(
@@ -29,7 +31,8 @@ public class NotificationGetResponseDTO {
                 notification.getNotidate(),
                 notification.getMessage(),
                 notification.getUrl(),
-                notification.isCheck()
+                notification.isCheck(),
+                BookmarkGetResponseDTO.fromBookmark(notification.getBookmark())
         );
     }
 
