@@ -1,5 +1,6 @@
 package beside.sunday8turtle.pickabookserver.modules.bookmark.service;
 
+import beside.sunday8turtle.pickabookserver.common.exception.EntityNotFoundException;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.BookmarkTag;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Tag;
@@ -52,13 +53,6 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<Bookmark> getBookmarksByUserId(long userId) {
-        return userService.getUserById(userId)
-                .map(user -> bookmarkRepository.findAllByUserId(user.getId()))
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    @Transactional(readOnly = true)
     public Page<Bookmark> getBookmarksByUserIdAndTagId(long userId, long tagId, Pageable pageable) {
         return userService.getUserById(userId)
                 .map(user -> bookmarkRepository.findAllByUserIdAndTagId(user.getId(), tagId, pageable))
@@ -68,7 +62,7 @@ public class BookmarkService {
     @Transactional(readOnly = true)
     public Bookmark getBookmarkByBookmarkId(long bookmarkId) {
         return bookmarkRepository.findById(bookmarkId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional

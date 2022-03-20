@@ -4,6 +4,7 @@ import beside.sunday8turtle.pickabookserver.common.exception.EntityNotFoundExcep
 import beside.sunday8turtle.pickabookserver.modules.bookmark.domain.Bookmark;
 import beside.sunday8turtle.pickabookserver.modules.bookmark.service.BookmarkService;
 import beside.sunday8turtle.pickabookserver.modules.notification.domain.Notification;
+import beside.sunday8turtle.pickabookserver.modules.notification.dto.NotificationPostResponseDTO;
 import beside.sunday8turtle.pickabookserver.modules.notification.repository.NotificationRepository;
 import beside.sunday8turtle.pickabookserver.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -50,10 +50,14 @@ public class NotificationService {
     }
 
     @Transactional
-    public void createNewNotificationByBookmarkId(long bookmarkId) {
-        Bookmark bookmark = bookmarkService.getBookmarkByBookmarkId(bookmarkId);
-        Notification notification = Notification.of("BROWSER", bookmark.getNotidate(), "까꿍~! 북마크 테스트 알림입니다.", "url", bookmark, bookmark.getUser());
-        notificationRepository.save(notification);
+    public void createNewNotification(NotificationPostResponseDTO dto) {
+        Bookmark bookmark = bookmarkService.getBookmarkByBookmarkId(dto.getBookmarkId());
+        Notification notification = notificationRepository.findFirstByBookmarkId(dto.getBookmarkId());
+        if(notification == null) {
+            notificationRepository.save(Notification.of(dto.getNotiType(), dto.getNotidate(), dto.getMessage(), dto.getUrl(), bookmark, bookmark.getUser()));
+        }else {
+            notification.update(dto.getNotiType(), dto.getNotidate(), dto.getMessage(), dto.getUrl(), bookmark, bookmark.getUser());
+        }
     }
 
     @Transactional(readOnly = true)
@@ -74,5 +78,4 @@ public class NotificationService {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(EntityNotFoundException::new);
         notification.checkNotification();
     }
-
 }

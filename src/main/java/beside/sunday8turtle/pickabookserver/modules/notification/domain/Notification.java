@@ -57,4 +57,13 @@ public class Notification extends BaseTimeEntity {
     public void checkNotification() {
         this.isCheck = true;
     }
+
+    public void update(String notiType, LocalDate notidate, String message, String url, Bookmark bookmark, User user) {
+        this.notiType = notiType;
+        this.notidate = notidate;
+        this.message = message;
+        this.url = url;
+        this.bookmark = bookmark;
+        this.user = user;
+    }
 }
