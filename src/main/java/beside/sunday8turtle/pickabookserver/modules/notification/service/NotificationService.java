@@ -73,6 +73,13 @@ public class NotificationService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
+    public List<Notification> getNotificationsByUserId(long userId) {
+        return userService.getUserById(userId)
+                .map(user -> notificationRepository.findAllByUserId(user.getId()))
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
     @Transactional
     public void updateNotificationCheck(long notificationId) {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(EntityNotFoundException::new);

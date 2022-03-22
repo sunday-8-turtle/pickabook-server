@@ -40,4 +40,10 @@ public class NotificationGetResponseDTO {
         return notifications.map(NotificationGetResponseDTO::fromNotification)
                 .stream().collect(Collectors.toList());
     }
+
+    public static List<NotificationGetResponseDTO> fromNotifications(List<Notification> notifications) {
+        return notifications.stream().map(NotificationGetResponseDTO::fromNotification)
+                .collect(Collectors.toList());
+
+    }
 }
