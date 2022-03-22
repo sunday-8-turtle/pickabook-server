@@ -85,9 +85,13 @@ public class NotificationController {
     }
 
     @GetMapping("")
-    public CommonResponse<List<NotificationGetResponseDTO>> getNotifications(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size) {
+    public CommonResponse<List<NotificationGetResponseDTO>> getNotifications(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         long userId = principalDetails.getUser().getId();
-        return CommonResponse.success(NotificationGetResponseDTO.fromNotifications(notificationService.getNotificationsByUserId(userId, PageRequest.of(page, size, Sort.Direction.DESC, "id"))));
+        if(page != null && size != null) {
+            return CommonResponse.success(NotificationGetResponseDTO.fromNotifications(notificationService.getNotificationsByUserId(userId, PageRequest.of(page, size, Sort.Direction.DESC, "id"))));
+        }else {
+            return CommonResponse.success(NotificationGetResponseDTO.fromNotifications(notificationService.getNotificationsByUserId(userId)));
+        }
     }
 
 }
