@@ -13,6 +13,6 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     void deleteById(Long tagId);
 
-    @Query("select distinct t from Tag t ,BookmarkTag bt, Bookmark b where b.user.id = :userId and b.id = bt.bookmarkId")
+    @Query("select distinct t from Tag t ,BookmarkTag bt, Bookmark b where b.user.id = :userId and b.id = bt.bookmarkId and t.id = bt.tagId")
     Page<Tag> findAllTagsByUserId(Long userId, Pageable pageable);
 }
