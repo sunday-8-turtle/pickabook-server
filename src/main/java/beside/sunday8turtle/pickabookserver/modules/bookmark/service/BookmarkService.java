@@ -107,6 +107,13 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
+    public Page<Bookmark> searchBookmarksByUserIdAndTitleAndDescription(long userId, String search, Pageable pageable) {
+        return userService.getUserById(userId)
+                .map(user -> bookmarkRepository.searchAllByUserIdAndTitleOrDescription(user.getId(), search, pageable))
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Transactional(readOnly = true)
     public Page<Bookmark> searchBookmarksByUserIdAndTitleAndDescriptionAndTagName(long userId, String search, Pageable pageable) {
         return userService.getUserById(userId)
                 .map(user -> bookmarkRepository.searchAllByUserIdAndTitleOrDescriptionOrTagName(user.getId(), search, pageable))

@@ -57,7 +57,7 @@ public class BookmarkController {
     @GetMapping("/search")
     public CommonResponse<List<BookmarkGetResponseDTO>> searchBookmarks(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Integer page, @RequestParam Integer size, @RequestParam String search) {
         long userId = principalDetails.getUser().getId();
-        return CommonResponse.success(BookmarkGetResponseDTO.fromBookmarks(bookmarkService.searchBookmarksByUserIdAndTitleAndDescriptionAndTagName(userId, search, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDateAt")))));
+        return CommonResponse.success(BookmarkGetResponseDTO.fromBookmarks(bookmarkService.searchBookmarksByUserIdAndTitleAndDescription(userId, search, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDateAt")))));
     }
 
     @GetMapping("/tags")

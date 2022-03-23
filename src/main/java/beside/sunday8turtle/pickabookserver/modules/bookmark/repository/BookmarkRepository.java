@@ -24,6 +24,9 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     void deleteById(long bookmarkId);
 
+    @Query("select DISTINCT b from Bookmark b where b.user.id = :userId and (b.title LIKE CONCAT('%',:search,'%') or b.description LIKE CONCAT('%',:search,'%'))")
+    Page<Bookmark> searchAllByUserIdAndTitleOrDescription(long userId, String search, Pageable pageable);
+
     @Query("select DISTINCT b from Bookmark b ,BookmarkTag t where b.user.id = :userId and b.id = t.bookmarkId and(b.title LIKE CONCAT('%',:search,'%') or b.description LIKE CONCAT('%',:search,'%') or t.tag.tagName LIKE CONCAT('%',:search,'%'))")
     Page<Bookmark> searchAllByUserIdAndTitleOrDescriptionOrTagName(long userId, String search, Pageable pageable);
 
